@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.DriverContraulFolder;
+package org.firstinspires.ftc.teamcode.DriverControlFolder;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
