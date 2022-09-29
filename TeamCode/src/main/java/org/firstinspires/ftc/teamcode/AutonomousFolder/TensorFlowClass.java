@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import java.util.List;
 import java.util.ArrayList;
 
-public class TensorFlowClass extends AutomatorClass {
+public class TensorFlowClass extends AutomatorClass_Runner {
     private static final String vuforiaKey = "<key>";
 
     private TFObjectDetector terry;
