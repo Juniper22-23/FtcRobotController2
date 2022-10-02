@@ -18,7 +18,7 @@ public class DriverControlClass extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            // main loop
+            // main loop    
         }
     }
 }
