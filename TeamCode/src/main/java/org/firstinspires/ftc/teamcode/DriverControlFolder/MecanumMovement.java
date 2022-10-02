@@ -3,10 +3,8 @@ package org.firstinspires.ftc.teamcode.DriverControlFolder;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
-import java.util.Set;
 
 @TeleOp(name = "Final Drive", group = "Tele-op")
 public class MecanumMovement extends LinearOpMode {
