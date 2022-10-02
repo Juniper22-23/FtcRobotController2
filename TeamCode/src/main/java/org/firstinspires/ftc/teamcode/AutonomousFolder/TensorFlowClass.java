@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import java.util.List;
 import java.util.ArrayList;
 
-public class TensorFlowClass extends AutomatorClass_Runner {
+public class TensorFlowClass extends AutomatorClass {
     private static final String vuforiaKey = "AYsOO+//////AAABmc2TlGXRrEpYsw1UPuEGK+xj/ybwffSKuL7ffLuhzm51GEM5ccJWjBO5XFTOmYCYiEVlCv2HpTa9+ZICMavximYCuGhJ0hCKtGTlYtTg/5AjtO6b1v9vswwtvKchMpcTFfhHK1A18R7FFbiJfQjTzznx1/Q6Et4TIRBqcEA5u7syU8suWSjWc3W/Kcy7ieQuQ15FoQsPQaw6JDZY32+xdyZlYbZ2MWfe0sPvQtkD+yJVa2wwZbBZTAoO6Q+rvRsHysQy0AqFB3sUKmRVvsV7gk7EQQ+edWgauCwgS23XZqwgkp5J/hKSZ/0SnXDuh1UQofuQFFxy57c9X18Cdky/Xl3hNTGUz393C8267cvb+JQy";
 
     private TFObjectDetector terry;
