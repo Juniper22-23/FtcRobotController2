@@ -73,7 +73,7 @@ public class ConceptExternalHardwareClass extends LinearOpMode {
     RobotHardware   robot       = new RobotHardware(this);
 
     @Override
-    public void runOpMode() {
+        public void runOpMode() {
         double drive        = 0;
         double turn         = 0;
         double arm          = 0;
