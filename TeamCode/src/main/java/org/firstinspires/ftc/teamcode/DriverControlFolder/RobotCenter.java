@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.DriverControlFolder;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -14,14 +16,14 @@ public class RobotCenter extends Drivetrain {
         double rotationEffectiveness;
         double xyEffectiveness;
 
-        double normalRot;
-        double normalX;
-        double normalY;
+        double normalRot = gamepad1.right_stick_x;
+        double normalX = gamepad1.left_stick_x;
+        double normalY = gamepad1.left_stick_y;
 
         double theta = Math.atan2(normalY,normalX);
         double power = Math.hypot(normalX,normalY);
         double sin = Math.sin(theta - Math.PI/4);
-        double cos = Math.cos(theta-Math.PI/4);
+        double cos = Math.cos(theta - Math.PI/4);
         double max = Math.max(Math.abs(sin),Math.abs(cos));
 
         double leftBackPower;
@@ -47,7 +49,7 @@ public class RobotCenter extends Drivetrain {
         rightBackMotor.setPower(rightBackPower);
         rightFrontMotor.setPower(rightFrontPower);
     }
-
+/*
     public void revolve(double magnitude) {
         // in inches
         double robotLength = 13.22; // distance between axles
@@ -94,4 +96,6 @@ public class RobotCenter extends Drivetrain {
         rightFrontMotor.setPower(rightFrontPower);
 
     }
+
+ */
 }
