@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class DriverControlClass extends LinearOpMode {
 
     // declare class variables here
+    // Youtube video for programming Tele-Op: https://www.youtube.com/watch?v=gnSW2QpkGXQ
 
     public void runOpMode() {
 
