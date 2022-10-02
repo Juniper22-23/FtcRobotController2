@@ -19,7 +19,7 @@ public class TensorFlowClass extends AutomatorClass {
     private VuforiaLocalizer vuforia;
 
     private static final String modelTerry = "<tflite file>";
-    private static final String[] labelTerry = {"Ball", "Cube", "Duck", "Marker"};
+    private static final String[] labelTerry = {"Bal", "Cube", "Duck", "Marker"};
 
     public ArrayList<String> recognitionLabels;
     public double terryDuckLeft;
