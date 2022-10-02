@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.DriverControlFolder;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-public class SetupClass {
+public class SetupClass_geese {
     //Motors
     public DcMotor frontLeftMotor = null;
     public DcMotor frontRightMotor = null;

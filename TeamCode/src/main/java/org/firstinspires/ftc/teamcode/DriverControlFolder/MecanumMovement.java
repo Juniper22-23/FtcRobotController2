@@ -16,7 +16,7 @@ public class MecanumMovement extends LinearOpMode {
     double fortyFiveInRads = -Math.PI / 4;
     double cosine45 = Math.cos(fortyFiveInRads);
     double sine45 = Math.sin(fortyFiveInRads);
-    SetupClass robot = new SetupClass();
+    SetupClass_geese robot = new SetupClass_geese();
     double INTAKE_HOME = 0.0;
     double INTAKE_MIN = 0.0;
     double INTAKE_MAX = 1;
