@@ -16,14 +16,13 @@ public class DriverControlClass extends LinearOpMode {
     private Controller controller;
     private RobotCenter robotCenter;
 
-
     public void runOpMode() {
 
         // setup
         controller = new Controller(gamepad1, gamepad2);
         robotCenter = new RobotCenter(telemetry, hardwareMap);
 
-
+        waitForStart();
         while (opModeIsActive()) {
             controller.update();
 
