@@ -5,9 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.RobotCenter;
+import org.firstinspires.ftc.teamcode.RobotCenterExample;
 
 // Youtube video for programming Tele-Op: https://www.youtube.com/watch?v=gnSW2QpkGXQ
 // Robot center programming
+// tensor https://www.youtube.com/watch?v=2FmcHiLCwTU help
 
 @TeleOp
 public class DriverControlClass extends LinearOpMode {
@@ -17,16 +19,28 @@ public class DriverControlClass extends LinearOpMode {
     private RobotCenter robotCenter;
 
     public void runOpMode() {
+        telemetry.clear();
+        try {
+            // setup
+            controller = new Controller(gamepad1, gamepad2);
+            robotCenter = new RobotCenter(telemetry, hardwareMap);
 
-        // setup
-        controller = new Controller(gamepad1, gamepad2);
-        robotCenter = new RobotCenter(telemetry, hardwareMap);
-
+        } catch (Exception exception) {
+            telemetry.addLine(exception.getMessage());
+            telemetry.update();
+        }
+        telemetry.update();
         waitForStart();
         while (opModeIsActive()) {
-            controller.update();
+            try {
+                controller.update();
 
-            robotCenter.drive(controller.gamepad1X, controller.gamepad1Y, controller.gamepad1Rot);
+                robotCenter.drive(controller.gamepad1X, controller.gamepad1Y, controller.gamepad1Rot);
+            } catch (Exception exception) {
+                telemetry.clear();
+                telemetry.addLine(exception.getMessage());
+            }
+            telemetry.update();
         }
     }
 }

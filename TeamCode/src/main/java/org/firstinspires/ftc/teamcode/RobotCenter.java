@@ -13,8 +13,8 @@ public class RobotCenter extends Drivetrain {
     }
 
     public void drive(double gamepadX, double gamepadY, double gamepadRot) {
-        double rotationEffectiveness = -0.50; // if you change the neg to pos it will inverse the rotation
-        double xyEffectiveness = 0.75;
+        double rotationEffectiveness = -1; // if you change the neg to pos it will inverse the rotation
+        double xyEffectiveness = 1;
 
         double turn = gamepadRot * rotationEffectiveness;
         double x = gamepadX * xyEffectiveness;
@@ -42,5 +42,11 @@ public class RobotCenter extends Drivetrain {
         leftFrontMotor.setPower(leftFrontPower);
         rightBackMotor.setPower(rightBackPower);
         rightFrontMotor.setPower(rightFrontPower);
+
+        telemetry.addLine("MOTOR POWERS:");
+        telemetry.addData("leftBackPower: ", leftBackPower);
+        telemetry.addData("leftFrontPower: ", leftFrontPower);
+        telemetry.addData("rightBackPower: ", rightBackPower);
+        telemetry.addData("rightFrontPower: ", rightFrontPower);
     }
 }
