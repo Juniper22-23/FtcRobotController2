@@ -43,7 +43,7 @@ public class RobotCenter extends Drivetrain {
         rightBackMotor.setPower(rightBackPower);
         rightFrontMotor.setPower(rightFrontPower);
 
-        telemetry.addLine("MOTOR POWERS:");
+        telemetry.addLine("MOTOR POWERS Method 2 Accuracy:");
         telemetry.addData("leftBackPower: ", leftBackPower);
         telemetry.addData("leftFrontPower: ", leftFrontPower);
         telemetry.addData("rightBackPower: ", rightBackPower);
