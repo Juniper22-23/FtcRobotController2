@@ -40,6 +40,7 @@ public class MecanumMovement_geese extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
 
+
             double spin = gamepad1.right_stick_x;//For controlling the spin.
             //getting the y value of the joystick(I put a negative because the joystick is flipped.)
             y1 = -gamepad1.left_stick_y;
