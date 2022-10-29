@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.RobotCenter;
-import org.firstinspires.ftc.teamcode.RobotCenterExample;
 
 // Youtube video for programming Tele-Op: https://www.youtube.com/watch?v=gnSW2QpkGXQ
 // Robot center programming

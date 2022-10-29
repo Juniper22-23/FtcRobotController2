@@ -13,10 +13,13 @@ public class RobotCenter extends Drivetrain {
     }
 
     public void drive(double gamepadX, double gamepadY, double gamepadRot) {
-        double rotationEffectiveness = -1; // if you change the neg to pos it will inverse the rotation
+        double rotationEffectiveness = 1;
         double xyEffectiveness = 1;
 
-        double turn = gamepadRot * rotationEffectiveness;
+        // gamepadRot is negated because in math, a counterclockwise rotation is positive
+        // (think unit circle), but on the controller, we expect the robot to rotate clockwise when
+        // we push the stick to the right. Pushing the stick to the right outputs a positive value.
+        double turn = -gamepadRot * rotationEffectiveness;
         double x = gamepadX * xyEffectiveness;
         double y = gamepadY * xyEffectiveness;
 
