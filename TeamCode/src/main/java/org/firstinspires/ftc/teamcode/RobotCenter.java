@@ -2,21 +2,24 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Drivetrain;
-
 public class RobotCenter extends Drivetrain {
     public RobotCenter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
     public void drive(double gamepadX, double gamepadY, double gamepadRot) {
-        double rotationEffectiveness = 0.50;
-        double xyEffectiveness = 0.75;
+        double rotationEffectiveness = 1;
+        double xyEffectiveness = 1;
 
-        double turn = gamepadRot * rotationEffectiveness;
+        // gamepadRot is negated because in math, a counterclockwise rotation is positive
+        // (think unit circle), but on the controller, we expect the robot to rotate clockwise when
+        // we push the stick to the right. Pushing the stick to the right outputs a positive value.
+        double turn = -gamepadRot * rotationEffectiveness;
         double x = gamepadX * xyEffectiveness;
         double y = gamepadY * xyEffectiveness;
 
@@ -26,10 +29,10 @@ public class RobotCenter extends Drivetrain {
         double cos = Math.cos(theta - Math.PI/4);
         double max = Math.max(Math.abs(sin),Math.abs(cos));
 
-        double leftBackPower = power * cos/max + turn;
-        double leftFrontPower = power * sin/max - turn;
-        double rightBackPower = power * sin/max + turn;
-        double rightFrontPower = power * cos/max + turn;
+        double leftBackPower = power * sin/max + turn;
+        double leftFrontPower = power * cos/max + turn;
+        double rightBackPower = power * cos/max - turn;
+        double rightFrontPower = power * sin/max - turn;
 
         if ((power + Math.abs(turn)) > 1) {
             leftFrontPower /= power + turn;
@@ -42,5 +45,11 @@ public class RobotCenter extends Drivetrain {
         leftFrontMotor.setPower(leftFrontPower);
         rightBackMotor.setPower(rightBackPower);
         rightFrontMotor.setPower(rightFrontPower);
+
+        telemetry.addLine("MOTOR POWERS Method 2 Accuracy:");
+        telemetry.addData("leftBackPower: ", leftBackPower);
+        telemetry.addData("leftFrontPower: ", leftFrontPower);
+        telemetry.addData("rightBackPower: ", rightBackPower);
+        telemetry.addData("rightFrontPower: ", rightFrontPower);
     }
 }

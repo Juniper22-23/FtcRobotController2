@@ -21,8 +21,8 @@ public class RobotCenterExample extends Drivetrain {
         double rightBackPower;
         double rightFrontPower;
 
-        rotationEffectiveness = 0.50;
-        xyEffectiveness = 0.75;
+        rotationEffectiveness = 1;
+        xyEffectiveness = 1;
 
         normalRot = gamepadRot * rotationEffectiveness;
         normalX = gamepadX * xyEffectiveness;
@@ -38,6 +38,12 @@ public class RobotCenterExample extends Drivetrain {
         leftFrontMotor.setPower(leftFrontPower);
         rightBackMotor.setPower(rightBackPower);
         rightFrontMotor.setPower(rightFrontPower);
+
+        telemetry.addLine("MOTOR POWERS Method 1 Speed:");
+        telemetry.addData("leftBackPower: ", leftBackPower);
+        telemetry.addData("leftFrontPower: ", leftFrontPower);
+        telemetry.addData("rightBackPower: ", rightBackPower);
+        telemetry.addData("rightFrontPower: ", rightFrontPower);
     }
 
     public void revolve(double magnitude) {
@@ -84,6 +90,7 @@ public class RobotCenterExample extends Drivetrain {
         leftFrontMotor.setPower(leftFrontPower);
         rightBackMotor.setPower(rightBackPower);
         rightFrontMotor.setPower(rightFrontPower);
+
 
     }
 }
