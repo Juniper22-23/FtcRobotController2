@@ -19,7 +19,7 @@ public class Controller {
     public boolean liftPos2;
     public boolean liftPos3;
 
-    //wheel
+    //wheel=car but if no wheel then no car
 
     public double gamepad1X;
     public double gamepad1Y;
