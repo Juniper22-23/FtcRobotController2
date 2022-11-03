@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -10,6 +11,8 @@ public abstract class Drivetrain extends Mechanism {
     protected DcMotor rightBackMotor;
     protected DcMotor rightFrontMotor;
 
+    protected BNO055IMU imu;
+
     public Drivetrain(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
 
@@ -18,8 +21,23 @@ public abstract class Drivetrain extends Mechanism {
         rightBackMotor = this.hardwareMap.get(DcMotor.class,"rightBackMotor");
         rightFrontMotor = this.hardwareMap.get(DcMotor.class,"rightFrontMotor");
 
+        imu = this.hardwareMap.get(BNO055IMU.class, "imu");
+        initializeIMU();
+
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
     }
+
+    public void initializeIMU() {
+        // don't touch please
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        imu.initialize(parameters);
+    }
+
+    public double readFromIMU() {
+        return -imu.getAngularOrientation().firstAngle;
+    }
+
     public abstract void drive(double gamepadX, double gamepadY, double gamepadRot);
 }
