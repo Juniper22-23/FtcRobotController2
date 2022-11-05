@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+@TeleOp(name = "FieldCenterTweaked", group = "Field Center")
 public class FieldCenter2 extends Drivetrain {
     //This is the tweaked version of Field Center.
     public FieldCenter2(Telemetry telemetry, HardwareMap hardwareMap) {
@@ -46,11 +47,11 @@ public class FieldCenter2 extends Drivetrain {
         double forward = pJoystick->controllerY() * -1; /* Invert stick Y axis */
         double strafe = pJoystick->controllerX();
 
-        float pi = 3.1415926;
+        double pi = 3.1415926;
 
         double gyro_degrees = ahrs->turn();
-        float gyro_radians = gyro_degrees * pi/180;
-        float temp = forward * cos(gyro_radians) +
+        double gyro_radians = gyro_degrees * pi/180;
+        double temp = forward * cos(gyro_radians) +
                 strafe * sin(gyro_radians);
         strafe = -forward * sin(gyro_radians) +
                 strafe * cos(gyro_radians);
