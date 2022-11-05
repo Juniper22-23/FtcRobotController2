@@ -3,10 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class FieldCenter2 extends Drivetrain {
+public class FieldCenter3 extends Drivetrain {
     //This is the tweaked version of Field Center.
-    public FieldCenter2(Telemetry telemetry, HardwareMap hardwareMap) {
+    public FieldCenter3(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
 
     }
@@ -15,6 +19,8 @@ public class FieldCenter2 extends Drivetrain {
     public void drive(double gamepadX, double gamepadY, double gamepadRot) {
         double rotationEffectiveness = 1;
         double xyEffectiveness = 1;
+
+        private Orientation angles; new Orientation();
 
         // gamepadRot is negated because in math, a counterclockwise rotation is positive
         // (think unit circle), but on the controller, we expect the robot to rotate clockwise when
@@ -48,7 +54,7 @@ public class FieldCenter2 extends Drivetrain {
 
         float pi = 3.1415926;
 
-        double gyro_degrees = ahrs->turn();
+        double gyro_degrees = ahrs->angles;
         float gyro_radians = gyro_degrees * pi/180;
         float temp = forward * cos(gyro_radians) +
                 strafe * sin(gyro_radians);
@@ -74,5 +80,11 @@ public class FieldCenter2 extends Drivetrain {
         telemetry.addData("leftFrontPower: ", leftFrontPower);
         telemetry.addData("rightBackPower: ", rightBackPower);
         telemetry.addData("rightFrontPower: ", rightFrontPower);
+
+         angles = imu.getAngularOrientation (AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        telemetry.addData(  "Heading Y-Axis", angles.firstAngle);
+        telemetry.addData(  "Roll X-Axis", angles.secondAngle);
+        telemetry.addData(  "Pitch Z-Axis", angles.thirdAngle); telemetry.update();
+
     }
 }
