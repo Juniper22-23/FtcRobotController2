@@ -8,6 +8,7 @@ public class FieldCenter2 extends Drivetrain {
     //This is the tweaked version of Field Center.
     public FieldCenter2(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
+
     }
 
     @Override
@@ -22,6 +23,7 @@ public class FieldCenter2 extends Drivetrain {
         double controllerX = gamepadX * xyEffectiveness;
         double controllerY = gamepadY * xyEffectiveness;
         double[] controllerVector = {controllerX, controllerY};
+
 
         double imuMeasure = readFromIMU();
 
@@ -39,6 +41,20 @@ public class FieldCenter2 extends Drivetrain {
         double leftFrontPower = power * cos/max + turn;
         double rightBackPower = power * cos/max - turn;
         double rightFrontPower = power * sin/max - turn;
+
+        double rcw = pJoystick->turn();
+        double forward = pJoystick->controllerY() * -1; /* Invert stick Y axis */
+        double strafe = pJoystick->controllerX();
+
+        float pi = 3.1415926;
+
+        double gyro_degrees = ahrs->turn();
+        float gyro_radians = gyro_degrees * pi/180;
+        float temp = forward * cos(gyro_radians) +
+                strafe * sin(gyro_radians);
+        strafe = -forward * sin(gyro_radians) +
+                strafe * cos(gyro_radians);
+         forward = temp;
 
         if ((power + Math.abs(turn)) > 1) {
             leftFrontPower /= power + turn;
