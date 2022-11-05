@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "FieldCentricVideo")
 public class NormalDrive extends LinearOpMode {
@@ -45,6 +46,8 @@ public class NormalDrive extends LinearOpMode {
         double gamepadDegree;
         double robotDegree;
         double movementDegree;
+        double gamepadXControl;
+        double gamepadYControl;
 
         frontLeft = hardwareMap.dcMotor.get("FrontLeft");
         frontRight = hardwareMap.dcMotor.get("FrontRight");
@@ -77,11 +80,17 @@ public class NormalDrive extends LinearOpMode {
 
             gamepadXCoordinate = gamepad1.right_stick_x;
             gamepadYCoordinate = gamepad1.right_stick_y;
-            gamepadHypot = Math.hypot(gamepadXCoordinate,gamepadYCoordinate);
+            gamepadHypot = Range.clip(Math.hypot(gamepadXCoordinate,gamepadYCoordinate),0,1);
             gamepadDegree = Math.atan2(gamepadYCoordinate,gamepadXCoordinate);
             robotDegree = getAngle();
             movementDegree = gamepadDegree - robotDegree;
+            gamepadXControl = Math.cos(Math.toRadians(movementDegree)) * gamepadHypot;
+            gamepadYControl = Math.sin(Math.toRadians(movementDegree)) * gamepadHypot;
 
+            frontRight.setPower(gamepadYControl * Math.abs(gamepadYControl) - gamepadXControl * Math.abs(gamepadXControl) + driveTurn);
+            frontRight.setPower(gamepadYControl * Math.abs(gamepadYControl) + gamepadXControl * Math.abs(gamepadXControl) + driveTurn);
+            frontRight.setPower(gamepadYControl * Math.abs(gamepadYControl) + gamepadXControl * Math.abs(gamepadXControl) - driveTurn);
+            frontRight.setPower(gamepadYControl * Math.abs(gamepadYControl) - gamepadXControl * Math.abs(gamepadXControl) - driveTurn);
 
             /*frontRight.setPower(driveVertical - driveHorizontal + driveTurn);
             backRight.setPower(driveVertical + driveHorizontal + driveTurn);
