@@ -44,6 +44,7 @@ public class FieldCenter extends Drivetrain {
         telemetry.addData("rotatedX: ", rotatedX);
         telemetry.addData("rotatedY: ", rotatedY);
 
+
         double theta = Math.atan2(rotatedY, rotatedX);
         telemetry.addData("theta: ", theta);
         double power = Math.hypot(rotatedX, rotatedY);
