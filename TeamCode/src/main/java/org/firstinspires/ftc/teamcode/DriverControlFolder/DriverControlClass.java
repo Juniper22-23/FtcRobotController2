@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.RobotCenter;
 // Robot center programming
 // tensor https://www.youtube.com/watch?v=2FmcHiLCwTU help
 
-@TeleOp(name = "DriverControlClass", group = "Tele-Op")
+@TeleOp(name = "DriverControlClass1", group = "Tele-Op")
 public class DriverControlClass extends LinearOpMode {
 
     // declare class variables here
