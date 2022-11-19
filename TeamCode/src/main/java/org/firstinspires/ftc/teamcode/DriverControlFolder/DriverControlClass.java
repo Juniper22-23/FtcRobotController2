@@ -16,6 +16,7 @@ public class DriverControlClass extends LinearOpMode {
 
     // declare class variables here
     private Controller controller;
+    private RobotCenter robotCenter;
     private FieldCenter fieldCenter;
 
     public void runOpMode() {
@@ -23,6 +24,7 @@ public class DriverControlClass extends LinearOpMode {
         try {
             // setup
             controller = new Controller(gamepad1, gamepad2);
+            robotCenter = new RobotCenter(telemetry, hardwareMap);
             fieldCenter = new FieldCenter(telemetry, hardwareMap);
 
         } catch (Exception exception) {
@@ -35,7 +37,7 @@ public class DriverControlClass extends LinearOpMode {
             try {
                 controller.update();
 
-                fieldCenter.drive(controller.gamepad1X, controller.gamepad1Y, controller.gamepad1Rot);
+                fieldCenter.drive(controller.gamepad1X, controller.gamepad1Y, controller.gamepad2Rot);
             } catch (Exception exception) {
                 telemetry.clear();
                 telemetry.addLine(exception.getMessage());

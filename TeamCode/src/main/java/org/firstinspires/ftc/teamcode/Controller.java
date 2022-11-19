@@ -28,13 +28,13 @@ public class Controller {
     public boolean collectorSlowDown;
     public boolean collectorSlowUp;
     public double gamepad1Rot;
-    public double liftX;
-    public double liftY;
+    public double gamepad2X;
+    public double gamepad2Y;
     public boolean liftSlowLeft;
     public boolean liftSlowRight;
     public boolean liftSlowDown;
     public boolean liftSlowUp;
-    public double liftRot;
+    public double gamepad2Rot;
 
     public double collectorRevCCW;
     public double collectorRevCW;
@@ -70,13 +70,13 @@ public class Controller {
         collectorSlowDown = gamepad1.dpad_down;
         collectorSlowUp = gamepad1.dpad_up;
         gamepad1Rot = gamepad1.right_stick_x;
-        liftX = -gamepad2.left_stick_x;
-        liftY = gamepad2.left_stick_y;
+        gamepad2X = gamepad2.left_stick_x;
+        gamepad2Y = -gamepad2.left_stick_y; // gamepad = controller
         liftSlowLeft = gamepad2.dpad_left;
         liftSlowRight = gamepad2.dpad_right;
         liftSlowDown = gamepad2.dpad_down;
         liftSlowUp = gamepad2.dpad_up;
-        liftRot = gamepad2.right_stick_x;
+        gamepad2Rot = gamepad2.right_stick_x;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;

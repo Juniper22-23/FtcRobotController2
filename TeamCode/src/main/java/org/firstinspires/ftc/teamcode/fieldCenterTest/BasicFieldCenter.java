@@ -1,11 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.fieldCenterTest;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Mathematics;
 
-public class FieldCenter extends Drivetrain {
-    public FieldCenter(Telemetry telemetry, HardwareMap hardwareMap) {
+public class BasicFieldCenter extends BasicDrivetrain {
+    public BasicFieldCenter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
@@ -28,7 +29,7 @@ public class FieldCenter extends Drivetrain {
         telemetry.addData("controllerVector[0]: ", controllerVector[0]);
         telemetry.addData("controllerVector[1]: ", controllerVector[1]);
 
-        double imuMeasure = readFromIMU();
+        double imuMeasure = getImuAngle();
         telemetry.addData("imuMeasure: ", imuMeasure);
 
         double[] rotatedVector = Mathematics.rotate(controllerVector, imuMeasure);
