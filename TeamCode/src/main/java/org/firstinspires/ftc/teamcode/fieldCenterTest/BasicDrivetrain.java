@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.Mechanism;
 
 public abstract class BasicDrivetrain extends Mechanism {
@@ -28,7 +29,7 @@ public abstract class BasicDrivetrain extends Mechanism {
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public abstract void drive(double gamepadX, double gamepadY, double gamepadRot);
+    public abstract void drive(BasicController controller);
 
     public DcMotor getLeftBackMotor() { return leftBackMotor; }
     public DcMotor getLeftFrontMotor() { return leftFrontMotor; }
