@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.RobotCenter;
 // Robot center programming
 // tensor https://www.youtube.com/watch?v=2FmcHiLCwTU help
 
-@TeleOp(name = "DriverControlClass1", group = "Tele-Op")
+@TeleOp(name = "DriverControlClass5", group = "Tele-Op")
 public class DriverControlClass extends LinearOpMode {
 
     // declare class variables here
@@ -37,7 +37,7 @@ public class DriverControlClass extends LinearOpMode {
             try {
                 controller.update();
 
-                fieldCenter.drive(controller.gamepad1X, controller.gamepad1Y, controller.gamepad2Rot);
+                fieldCenter.drive(controller);
             } catch (Exception exception) {
                 telemetry.clear();
                 telemetry.addLine(exception.getMessage());

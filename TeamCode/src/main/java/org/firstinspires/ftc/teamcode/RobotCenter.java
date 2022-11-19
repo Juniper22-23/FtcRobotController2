@@ -12,7 +12,34 @@ public class RobotCenter extends Drivetrain {
         super(telemetry, hardwareMap);
     }
 
-    public void drive(double gamepadX, double gamepadY, double gamepadRot) {
+    public void drive(Controller controller) {
+        double gamepadX;
+        double gamepadY;
+        double gamepadRot;
+
+        if (Math.abs(controller.gamepad1X) > 0.01) {
+            gamepadX = controller.gamepad1X;
+        } else if (Math.abs(controller.gamepad2X) > 0.01) {
+            gamepadX = controller.gamepad2X;
+        } else {
+            gamepadX = 0;
+        }
+        if (Math.abs(controller.gamepad1Y) > 0.01) {
+            gamepadY = controller.gamepad1Y;
+        } else if (Math.abs(controller.gamepad2Y) > 0.01) {
+            gamepadY = controller.gamepad2Y;
+        } else {
+            gamepadY = 0;
+        }
+        if (Math.abs(controller.gamepad1Rot) > 0.01) {
+            gamepadRot = controller.gamepad1Rot;
+        } else if (Math.abs(controller.gamepad2Rot) > 0.01) {
+            gamepadRot = controller.gamepad2Rot;
+        } else {
+            gamepadRot = 0;
+        }
+
+
         double rotationEffectiveness = 1;
         double xyEffectiveness = 1;
 

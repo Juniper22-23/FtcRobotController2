@@ -22,6 +22,11 @@ public abstract class Drivetrain extends Mechanism {
         rightBackMotor = this.hardwareMap.get(DcMotor.class,"rightBackMotor");
         rightFrontMotor = this.hardwareMap.get(DcMotor.class,"rightFrontMotor");
 
+        leftBackMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFrontMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBackMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFrontMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         imu = this.hardwareMap.get(BNO055IMU.class, "imu");
         initializeIMU();
 
@@ -40,10 +45,11 @@ public abstract class Drivetrain extends Mechanism {
         return -imu.getAngularOrientation().firstAngle;
     }
 
-    public abstract void drive(double gamepadX, double gamepadY, double gamepadRot);
-
     public DcMotor getLeftBackMotor() { return leftBackMotor; }
     public DcMotor getLeftFrontMotor() { return leftFrontMotor; }
     public DcMotor getRightBackMotor() { return rightBackMotor; }
     public DcMotor getRightFrontMotor() { return rightFrontMotor; }
+
+
+    public abstract void drive(Controller controller);
 }

@@ -5,12 +5,59 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class FieldCenter extends Drivetrain {
+
+    private double STRAFE_TOGGLE_FACTOR = 0.5;
+    private double ROTATION_TOGGLE_FACTOR = 0.5;
+
+    private boolean strafeToggle = false;
+    private boolean rotationToggle = false;
+
     public FieldCenter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
     @Override
-    public void drive(double gamepadX, double gamepadY, double gamepadRot) {
+    public void drive(Controller controller) {
+        double gamepadX;
+        double gamepadY;
+        double gamepadRot;
+
+        if (Math.abs(controller.gamepad1X) > 0.01) {
+            gamepadX = controller.gamepad1X;
+        } else if (Math.abs(controller.gamepad2X) > 0.01) {
+            gamepadX = controller.gamepad2X;
+        } else {
+            gamepadX = 0;
+        }
+        if (Math.abs(controller.gamepad1Y) > 0.01) {
+            gamepadY = controller.gamepad1Y;
+        } else if (Math.abs(controller.gamepad2Y) > 0.01) {
+            gamepadY = controller.gamepad2Y;
+        } else {
+            gamepadY = 0;
+        }
+        if (Math.abs(controller.gamepad1Rot) > 0.01) {
+            gamepadRot = controller.gamepad1Rot;
+        } else if (Math.abs(controller.gamepad2Rot) > 0.01) {
+            gamepadRot = controller.gamepad2Rot;
+        } else {
+            gamepadRot = 0;
+        }
+
+        if (controller.gamepad1RotationToggle || controller.gamepad2RotationToggle) {
+            rotationToggle = !rotationToggle;
+        }
+        if (rotationToggle) {
+            gamepadRot *= ROTATION_TOGGLE_FACTOR;
+        }
+        if (controller.gamepad1StrafeToggle || controller.gamepad2StrafeToggle) {
+            strafeToggle = !strafeToggle;
+        }
+        if (strafeToggle) {
+            gamepadX *= STRAFE_TOGGLE_FACTOR;
+            gamepadY *= STRAFE_TOGGLE_FACTOR;
+        }
+
         telemetry.addData("gamepadX: ", gamepadX);
         telemetry.addData("gamepadY: ", gamepadY);
         telemetry.addData("gamepadRot: ", gamepadRot);
