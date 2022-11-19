@@ -16,6 +16,7 @@ public class FieldCenterTest {
 
     Telemetry telemetry;
     HardwareMap hardwareMap;
+    BasicController controller;
     BasicFieldCenter fieldCenter;
 
     private MockDcMotor leftBackMotor;
@@ -34,6 +35,8 @@ public class FieldCenterTest {
         hardwareMap.put("leftFrontMotor", new MockDcMotor("leftFrontMotor"));
         hardwareMap.put("rightBackMotor", new MockDcMotor("rightBackMotor"));
         hardwareMap.put("rightFrontMotor", new MockDcMotor("rightFrontMotor"));
+
+        controller = new BasicController();
 
         fieldCenter = new BasicFieldCenter(telemetry, hardwareMap);
         fieldCenter.setImuAngle(0.0);
@@ -84,21 +87,30 @@ public class FieldCenterTest {
 
     @Test
     public void testForwardMotorPower() {
-        fieldCenter.drive(0.0, 1.0, 0.0);
+        controller.gamepad1X = 0.0;
+        controller.gamepad1Y = 1.0;
+        controller.gamepad1Rot = 0.0;
+        fieldCenter.drive(controller);
 
         assertMotorPowers(1.0, 1.0, 1.0, 1.0);
     }
 
     @Test
     public void testStrafeMotorPower() {
-        fieldCenter.drive(1.0, 0.0, 0.0);
+        controller.gamepad1X = 1.0;
+        controller.gamepad1Y = 0.0;
+        controller.gamepad1Rot = 0.0;
+        fieldCenter.drive(controller);
 
         assertMotorPowers(-1.0, 1.0, 1.0, -1.0);
     }
 
     @Test
     public void testRotateMotorPower() {
-        fieldCenter.drive(0.0, 0.0, 1.0);
+        controller.gamepad1X = 0.0;
+        controller.gamepad1Y = 0.0;
+        controller.gamepad1Rot = 1.0;
+        fieldCenter.drive(controller);
 
         assertMotorPowers(-1.0, -1.0, 1.0, 1.0);
     }
