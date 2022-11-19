@@ -5,23 +5,70 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class FieldCenter extends Drivetrain {
+
+    private double STRAFE_TOGGLE_FACTOR = 0.5;
+    private double ROTATION_TOGGLE_FACTOR = 0.5;
+
+    private boolean strafeToggle = false;
+    private boolean rotationToggle = false;
+
     public FieldCenter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
     @Override
-    public void drive(double gamepadX, double gamepadY, double gamepadRot) {
+    public void drive(Controller controller) {
+        double gamepadX;
+        double gamepadY;
+        double gamepadRot;
+
+        if (Math.abs(controller.gamepad1X) > 0.01) {
+            gamepadX = controller.gamepad1X;
+        } else if (Math.abs(controller.gamepad2X) > 0.01) {
+            gamepadX = controller.gamepad2X;
+        } else {
+            gamepadX = 0;
+        }
+        if (Math.abs(controller.gamepad1Y) > 0.01) {
+            gamepadY = controller.gamepad1Y;
+        } else if (Math.abs(controller.gamepad2Y) > 0.01) {
+            gamepadY = controller.gamepad2Y;
+        } else {
+            gamepadY = 0;
+        }
+        if (Math.abs(controller.gamepad1Rot) > 0.01) {
+            gamepadRot = controller.gamepad1Rot;
+        } else if (Math.abs(controller.gamepad2Rot) > 0.01) {
+            gamepadRot = controller.gamepad2Rot;
+        } else {
+            gamepadRot = 0;
+        }
+
+        if (controller.gamepad1RotationToggle || controller.gamepad2RotationToggle) {
+            rotationToggle = !rotationToggle;
+        }
+        if (rotationToggle) {
+            gamepadRot *= ROTATION_TOGGLE_FACTOR;
+        }
+        if (controller.gamepad1StrafeToggle || controller.gamepad2StrafeToggle) {
+            strafeToggle = !strafeToggle;
+        }
+        if (strafeToggle) {
+            gamepadX *= STRAFE_TOGGLE_FACTOR;
+            gamepadY *= STRAFE_TOGGLE_FACTOR;
+        }
+
         telemetry.addData("gamepadX: ", gamepadX);
         telemetry.addData("gamepadY: ", gamepadY);
         telemetry.addData("gamepadRot: ", gamepadRot);
 
-        double rotationEffectiveness = -1.0;
+        double rotationEffectiveness = 1.0;
         double xyEffectiveness = 1.0;
 
         // gamepadRot is negated because in math, a counterclockwise rotation is positive
         // (think unit circle), but on the controller, we expect the robot to rotate clockwise when
         // we push the stick to the right. Pushing the stick to the right outputs a positive value.
-        double turn = Math.abs(gamepadRot * rotationEffectiveness);
+        double turn = -gamepadRot * rotationEffectiveness;
         double controllerX = gamepadX * xyEffectiveness;
         double controllerY = gamepadY * xyEffectiveness;
         double[] controllerVector = {controllerX, controllerY};
@@ -60,10 +107,10 @@ public class FieldCenter extends Drivetrain {
         telemetry.addData("rightFrontPower: ", rightFrontPower);
 
         if ((power + Math.abs(turn)) > 1) {
-            leftFrontPower /= power + turn;
-            rightFrontPower /= power + turn;
-            leftBackPower /= power + turn;
-            rightBackPower /= power + turn;
+            leftFrontPower /= power + Math.abs(turn);
+            rightFrontPower /= power + Math.abs(turn);
+            leftBackPower /= power + Math.abs(turn);
+            rightBackPower /= power + Math.abs(turn);
             telemetry.addLine("powers were above one");
         }
 

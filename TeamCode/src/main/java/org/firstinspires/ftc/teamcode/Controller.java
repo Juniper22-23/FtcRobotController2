@@ -12,8 +12,10 @@ public class Controller {
     public boolean freightIntake;
     public boolean dumperToggle;
     public boolean carouselOperation;
-    public boolean dumperCollect;
-    public boolean dumperDump;
+    public boolean gamepad1StrafeToggle;
+    public boolean gamepad2StrafeToggle;
+    public boolean gamepad1RotationToggle;
+    public boolean gamepad2RotationToggle;
     public boolean liftPos0;
     public boolean liftPos1;
     public boolean liftPos2;
@@ -28,13 +30,13 @@ public class Controller {
     public boolean collectorSlowDown;
     public boolean collectorSlowUp;
     public double gamepad1Rot;
-    public double liftX;
-    public double liftY;
+    public double gamepad2X;
+    public double gamepad2Y;
     public boolean liftSlowLeft;
     public boolean liftSlowRight;
     public boolean liftSlowDown;
     public boolean liftSlowUp;
-    public double liftRot;
+    public double gamepad2Rot;
 
     public double collectorRevCCW;
     public double collectorRevCW;
@@ -56,8 +58,10 @@ public class Controller {
         freightIntake = gamepad1.right_bumper;
         dumperToggle = gamepadKeyboard1.activeBefore.contains("y");
         carouselOperation = gamepad1.b;
-        dumperCollect = gamepadKeyboard2.activeBefore.contains("left_bumper");
-        dumperDump = gamepadKeyboard2.activeBefore.contains("right_bumper");
+        gamepad1StrafeToggle = gamepadKeyboard1.activeBefore.contains("left_bumper");
+        gamepad2StrafeToggle = gamepadKeyboard2.activeBefore.contains("left_bumper");
+        gamepad1RotationToggle = gamepadKeyboard1.activeBefore.contains("right_bumper");
+        gamepad2RotationToggle = gamepadKeyboard2.activeBefore.contains("right_bumper");
         liftPos0 = gamepadKeyboard2.activeBefore.contains("b");
         liftPos1 = gamepadKeyboard2.activeBefore.contains("a");
         liftPos2 = gamepadKeyboard2.activeBefore.contains("x");
@@ -70,13 +74,13 @@ public class Controller {
         collectorSlowDown = gamepad1.dpad_down;
         collectorSlowUp = gamepad1.dpad_up;
         gamepad1Rot = gamepad1.right_stick_x;
-        liftX = -gamepad2.left_stick_x;
-        liftY = gamepad2.left_stick_y;
+        gamepad2X = gamepad2.left_stick_x;
+        gamepad2Y = -gamepad2.left_stick_y;
         liftSlowLeft = gamepad2.dpad_left;
         liftSlowRight = gamepad2.dpad_right;
         liftSlowDown = gamepad2.dpad_down;
         liftSlowUp = gamepad2.dpad_up;
-        liftRot = gamepad2.right_stick_x;
+        gamepad2Rot = gamepad2.right_stick_x;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;
