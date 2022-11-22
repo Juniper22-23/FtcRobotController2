@@ -27,53 +27,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode.Mechanisms;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-/**
- * Demonstrates empty OpMode
- */
-@TeleOp(name = "Concept: NullOp", group = "Concept")
-@Disabled
-public class ConceptNullOp extends OpMode {
+public class SetupClass {
+    //Motors
+    public DcMotor LinearSlides = null;
 
-  private final ElapsedTime runtime = new ElapsedTime();
+    //Servos
+    //public Servo intakeClaw = null;
 
-  @Override
-  public void init() {
-    telemetry.addData("Status", "Initialized");
-  }
+    /* local OpMode members. */
+    HardwareMap hwMap = null;
 
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
-  @Override
-  public void init_loop() {
-  }
 
-  /*
-   * This method will be called ONCE when start is pressed
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  @Override
-  public void start() {
-    runtime.reset();
-  }
+    /* Initialize standard Hardware interfaces */
+    public void init(HardwareMap ahwMap) {
+        // Save reference to Hardware map
+        hwMap = ahwMap;
 
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  @Override
-  public void loop() {
-    telemetry.addData("Status", "Run Time: " + runtime.toString());
-  }
+        // Define and Initialize Motors
+        LinearSlides = hwMap.get(DcMotor.class, "linearSlides");
+        // Define and Initialize Servos
+
+
+//        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);// Set all motors to zero power
+        LinearSlides.setPower(0);
+
+
+        // Set all motors to run without encoders.
+        // May want to use RUN_USING_ENCODERS if encoders are installed.
+        LinearSlides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LinearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        LinearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LinearSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
+    }
 }

@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Controller {
-    private Gamepad gamepad1;
-    private Gamepad gamepad2;
-    private GamepadKeyboard gamepadKeyboard1;
-    private GamepadKeyboard gamepadKeyboard2;
+    private final Gamepad gamepad1;
+    private final Gamepad gamepad2;
+    private final GamepadKeyboard gamepadKeyboard1;
+    private final GamepadKeyboard gamepadKeyboard2;
 
     public boolean freightOuttake;
     public boolean freightIntake;
@@ -16,10 +16,10 @@ public class Controller {
     public boolean gamepad2StrafeToggle;
     public boolean gamepad1RotationToggle;
     public boolean gamepad2RotationToggle;
-    public boolean liftPos0;
-    public boolean liftPos1;
-    public boolean liftPos2;
-    public boolean liftPos3;
+    public boolean liftpos0;
+    public boolean liftpos1;
+    public boolean liftpos2;
+    public boolean liftpos3;
 
     //wheel=car but if no wheel then no car
 
@@ -37,6 +37,10 @@ public class Controller {
     public boolean liftSlowDown;
     public boolean liftSlowUp;
     public double gamepad2Rot;
+    public boolean y;
+    public boolean x;
+    public boolean a;
+    public boolean b;
 
     public double collectorRevCCW;
     public double collectorRevCW;
@@ -62,10 +66,10 @@ public class Controller {
         gamepad2StrafeToggle = gamepadKeyboard2.activeBefore.contains("left_bumper");
         gamepad1RotationToggle = gamepadKeyboard1.activeBefore.contains("right_bumper");
         gamepad2RotationToggle = gamepadKeyboard2.activeBefore.contains("right_bumper");
-        liftPos0 = gamepadKeyboard2.activeBefore.contains("b");
-        liftPos1 = gamepadKeyboard2.activeBefore.contains("a");
-        liftPos2 = gamepadKeyboard2.activeBefore.contains("x");
-        liftPos3 = gamepadKeyboard2.activeBefore.contains("y");
+        liftpos0 = gamepadKeyboard2.activeBefore.contains("b");
+        liftpos1 = gamepadKeyboard2.activeBefore.contains("a");
+        liftpos2 = gamepadKeyboard2.activeBefore.contains("x");
+        liftpos3 = gamepadKeyboard2.activeBefore.contains("y");
 
         gamepad1X = gamepad1.left_stick_x;
         gamepad1Y = -gamepad1.left_stick_y;
@@ -81,6 +85,11 @@ public class Controller {
         liftSlowDown = gamepad2.dpad_down;
         liftSlowUp = gamepad2.dpad_up;
         gamepad2Rot = gamepad2.right_stick_x;
+        //Buttons
+        y = gamepad1.y;
+        x = gamepad1.x;
+        a = gamepad1.a;
+        b = gamepad1.b;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;

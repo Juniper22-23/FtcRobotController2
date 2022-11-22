@@ -6,8 +6,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class FieldCenter extends Drivetrain {
 
-    private double STRAFE_TOGGLE_FACTOR = 0.5;
-    private double ROTATION_TOGGLE_FACTOR = 0.5;
+    private final double STRAFE_TOGGLE_FACTOR = 0.5;
+    private final double ROTATION_TOGGLE_FACTOR = 0.5;
 
     private boolean strafeToggle = false;
     private boolean rotationToggle = false;

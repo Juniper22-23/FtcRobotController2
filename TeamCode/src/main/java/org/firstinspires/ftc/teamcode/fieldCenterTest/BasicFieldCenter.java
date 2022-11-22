@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.Mathematics;
 
 public class BasicFieldCenter extends BasicDrivetrain {
 
-    private double STRAFE_TOGGLE_FACTOR = 0.5;
-    private double ROTATION_TOGGLE_FACTOR = 0.5;
+    private final double STRAFE_TOGGLE_FACTOR = 0.5;
+    private final double ROTATION_TOGGLE_FACTOR = 0.5;
 
     private boolean strafeToggle = false;
     private boolean rotationToggle = false;
