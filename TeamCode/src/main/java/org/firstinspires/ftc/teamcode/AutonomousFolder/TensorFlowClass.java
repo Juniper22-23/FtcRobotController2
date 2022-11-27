@@ -19,7 +19,7 @@ public class TensorFlowClass extends AutomatorClass {
     private final VuforiaLocalizer vuforia;
 
     private static final String modelTerry = "<tflite file>";
-    private static final String[] labelTerry = {"image1", "image2", "image3"};
+    private static final String[] labelTerry = {"juniper", "SycamoreLogo", "aviator"};
 
     public ArrayList<String> recognitionLabels;
     public double terryDuckLeft;
@@ -71,6 +71,7 @@ public class TensorFlowClass extends AutomatorClass {
                     for (Recognition terrySmart : terrySmarts) {
                         telemetry.addData("item", terrySmart.getLabel());
                         recognitionLabels.add(terrySmart.getLabel());
+                        /*
                         if (terrySmart.getLabel().equals("Duck")) {
                             terryDuckRight = terrySmart.getRight();
                             telemetry.addData("    left", terrySmart.getLeft());
@@ -83,17 +84,16 @@ public class TensorFlowClass extends AutomatorClass {
                             telemetry.addData("    right", terrySmart.getRight());
                             telemetry.addData("    bottom", terrySmart.getBottom());
                         }
+                         */
 
                         i++;
                     }
                 }
-                if (recognitionLabels.contains("Duck")) {
-                    if (terryDuckRight < 360) {
+                if (recognitionLabels.contains("juniper")) {
                         return 3;
-                    } else {
+                }else if (recognitionLabels.contains("SycamoreLogo")){
                         return 2;
-                    }
-                } else {
+                }else {
                     return 1;
                 }
             }
