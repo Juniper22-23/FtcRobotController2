@@ -27,11 +27,11 @@ public class DriverControlClass extends LinearOpMode {
         try {
             // setup
             controller = new Controller(gamepad1, gamepad2);
-            //robotCenter = new RobotCenter(telemetry, hardwareMap);
-            fieldCenter = new FieldCenter(telemetry, hardwareMap);
-            linearSlides = new LinearSlidesMechanism(telemetry,hardwareMap);
+            // fieldCenter = new FieldCenter(telemetry, hardwareMap);
+            linearSlides = new LinearSlidesMechanism(telemetry, hardwareMap);
 
         } catch (Exception exception) {
+            telemetry.addLine("Outside of the while loop:");
             telemetry.addLine(exception.getMessage());
             telemetry.update();
         }
@@ -40,10 +40,10 @@ public class DriverControlClass extends LinearOpMode {
         while (opModeIsActive()) {
             try {
                 controller.update();
-
-                linearSlides.Move();
-                //fieldCenter.drive(controller);
+                linearSlides.run(controller);
+                // fieldCenter.drive(controller);
             } catch (Exception exception) {
+                telemetry.addLine("Inside of the while loop:");
                 telemetry.clear();
                 telemetry.addLine(exception.getMessage());
             }
