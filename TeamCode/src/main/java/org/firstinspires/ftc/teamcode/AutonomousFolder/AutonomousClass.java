@@ -7,10 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class AutonomousClass extends LinearOpMode {
 
     // declare class variables here
+    private TensorFlowCorrect tensorFlow;
+    private int tensorFlowValue = 1;
 
     public void runOpMode() {
 
-        // setup
+        tensorFlow = new TensorFlowCorrect(telemetry, hardwareMap);
+        waitForStart();
+        tensorFlowValue = tensorFlow.useTensor();
+        telemetry.addData("tensorFlowValue", tensorFlowValue);
+        telemetry.update();
 
         while (opModeIsActive()) {
             // main loop
