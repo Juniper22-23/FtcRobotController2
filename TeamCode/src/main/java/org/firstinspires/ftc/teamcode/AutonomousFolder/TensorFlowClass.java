@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.AutonomousFolder;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -15,17 +16,14 @@ import java.util.ArrayList;
 public class TensorFlowClass extends AutomatorClass {
     private static final String vuforiaKey = "AYsOO+//////AAABmc2TlGXRrEpYsw1UPuEGK+xj/ybwffSKuL7ffLuhzm51GEM5ccJWjBO5XFTOmYCYiEVlCv2HpTa9+ZICMavximYCuGhJ0hCKtGTlYtTg/5AjtO6b1v9vswwtvKchMpcTFfhHK1A18R7FFbiJfQjTzznx1/Q6Et4TIRBqcEA5u7syU8suWSjWc3W/Kcy7ieQuQ15FoQsPQaw6JDZY32+xdyZlYbZ2MWfe0sPvQtkD+yJVa2wwZbBZTAoO6Q+rvRsHysQy0AqFB3sUKmRVvsV7gk7EQQ+edWgauCwgS23XZqwgkp5J/hKSZ/0SnXDuh1UQofuQFFxy57c9X18Cdky/Xl3hNTGUz393C8267cvb+JQy";
 
-    private final TFObjectDetector terry;
+    private final TFObjectDetector tfod;
     private final VuforiaLocalizer vuforia;
 
-    private static final String modelTerry = "<tflite file>";
-    private static final String[] labelTerry = {"juniper", "SycamoreLogo", "aviator"};
+    private static final String modelFile = "PowerPlayWorkingModel2.tflite";
+    // private static final String[] labels = {"juniper", "SycamoreLogo", "aviator"};
+    private static final String[] labels = {"SycamoreLogo", "aviator", "juniper"};
 
     public ArrayList<String> recognitionLabels;
-    public double terryDuckLeft;
-    public double terryDuckTop;
-    public double terryDuckRight;
-    public double terryDuckBottom;
 
     public TensorFlowClass(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
@@ -40,49 +38,49 @@ public class TensorFlowClass extends AutomatorClass {
         tParams.minResultConfidence = 0.8f;
         tParams.isModelTensorFlow2 = true;
         tParams.inputSize = 320;
-        terry = ClassFactory.getInstance().createTFObjectDetector(tParams, vuforia);
-        terry.loadModelFromAsset(modelTerry, labelTerry);
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tParams, vuforia);
+        tfod.loadModelFromAsset(modelFile, labels);
 
         recognitionLabels = new ArrayList<String>();
 
-        if (terry != null) {
-            terry.activate();
-            terry.setZoom(1.0, (16.0/9.0));
+        if (tfod != null) {
+            tfod.activate();
+            tfod.setZoom(1.0, (16.0/9.0));
             telemetry.addLine("[TERRY]: Terry thinks he can be smart today.");
         } else {
             telemetry.addLine("[TERRY]: Terry is being dumb right now, please check back later.");
         }
     }
 
-    public int getTensation() {
-        if (terry != null) {
-            terry.setZoom(1.0, (16.0 / 9.0));
-            List<Recognition> terrySmarts = terry.getRecognitions();
-            if (terrySmarts == null) {
-                telemetry.addLine("[TERRY]: Terry is not smart right now, please check back later.");
+    public int getRecognition(TelemetryPacket packet) {
+        if (tfod != null) {
+            tfod.setZoom(1.0, (16.0 / 9.0));
+            List<Recognition> recognitions = tfod.getRecognitions();
+            if (recognitions == null) {
+                telemetry.addLine("[TFOD]: Recognitions is null...");
+                packet.put("", "");
             } else {
-                telemetry.addLine("[TERRY]: Terry thinks he sees something!");
                 recognitionLabels.clear();
-                if (terrySmarts.size() == 0) {
-                    telemetry.addLine("[TERRY]: Well never mind, he thought he was seeing something.");
+                if (recognitions.size() == 0) {
+                    telemetry.addLine("[TFOD]: Nothing is recognized...");
                 } else {
-                    telemetry.addData("[TERRY]: Terry recognizes this many objects ", terrySmarts.size());
+                    telemetry.addData("[TFOD]: Recognized this many objects ", recognitions.size());
                     int i = 0;
-                    for (Recognition terrySmart : terrySmarts) {
-                        telemetry.addData("item", terrySmart.getLabel());
-                        recognitionLabels.add(terrySmart.getLabel());
+                    for (Recognition recognition : recognitions) {
+                        telemetry.addData("item", recognition.getLabel());
+                        recognitionLabels.add(recognition.getLabel());
                         /*
-                        if (terrySmart.getLabel().equals("Duck")) {
-                            terryDuckRight = terrySmart.getRight();
-                            telemetry.addData("    left", terrySmart.getLeft());
-                            telemetry.addData("    top", terrySmart.getTop());
+                        if (recognition.getLabel().equals("Duck")) {
+                            terryDuckRight = recognition.getRight();
+                            telemetry.addData("    left", recognition.getLeft());
+                            telemetry.addData("    top", recognition.getTop());
                             telemetry.addData("    right", terryDuckRight);
-                            telemetry.addData("    bottom", terrySmart.getBottom());
+                            telemetry.addData("    bottom", recognition.getBottom());
                         } else {
-                            telemetry.addData("    left", terrySmart.getLeft());
-                            telemetry.addData("    top", terrySmart.getTop());
-                            telemetry.addData("    right", terrySmart.getRight());
-                            telemetry.addData("    bottom", terrySmart.getBottom());
+                            telemetry.addData("    left", recognition.getLeft());
+                            telemetry.addData("    top", recognition.getTop());
+                            telemetry.addData("    right", recognition.getRight());
+                            telemetry.addData("    bottom", recognition.getBottom());
                         }
                          */
 
@@ -91,14 +89,14 @@ public class TensorFlowClass extends AutomatorClass {
                 }
                 if (recognitionLabels.contains("juniper")) {
                         return 3;
-                }else if (recognitionLabels.contains("SycamoreLogo")){
+                } else if (recognitionLabels.contains("SycamoreLogo")){
                         return 2;
-                }else {
+                } else if (recognitionLabels.contains("aviator")) {
                     return 1;
                 }
             }
         } else {
-            telemetry.addLine("[TERRY]: Terry is being dumb right now, please check back later.");
+            telemetry.addLine("[TFOD]: TFOD is null...");
         }
         return 0;
     }
