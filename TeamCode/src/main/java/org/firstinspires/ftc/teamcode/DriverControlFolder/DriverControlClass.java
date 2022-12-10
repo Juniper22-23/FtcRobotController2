@@ -5,30 +5,31 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.FieldCenter;
+import org.firstinspires.ftc.teamcode.Mechanisms.GripperMechanism;
 import org.firstinspires.ftc.teamcode.Mechanisms.LinearSlidesMechanism;
-import org.firstinspires.ftc.teamcode.RobotCenter;
-//import org.firstinspires.ftc.teamcode.RobotCenter;
+
 
 // Youtube video for programming Tele-Op: https://www.youtube.com/watch?v=gnSW2QpkGXQ
 // Robot center programming
 // tensor https://www.youtube.com/watch?v=2FmcHiLCwTU help
 
-@TeleOp(name = "DriverControlClass1", group = "Tele-Op")
+@TeleOp(name = "DriverControlClass2", group = "Tele-Op")
 public class DriverControlClass extends LinearOpMode {
 
     // declare class variables here
     public Controller controller;
-    public RobotCenter robotCenter;
     public FieldCenter fieldCenter;
     public LinearSlidesMechanism linearSlides;
+    public GripperMechanism gripperMechanism;
 
     public void runOpMode() {
         telemetry.clear();
         try {
             // setup
             controller = new Controller(gamepad1, gamepad2);
-            // fieldCenter = new FieldCenter(telemetry, hardwareMap);
-            //linearSlides = new LinearSlidesMechanism(telemetry, hardwareMap);
+            fieldCenter = new FieldCenter(telemetry, hardwareMap);
+            linearSlides = new LinearSlidesMechanism(telemetry, hardwareMap);
+            gripperMechanism = new GripperMechanism(telemetry, hardwareMap);
 
         } catch (Exception exception) {
             telemetry.addLine("Outside of the while loop:");
@@ -40,8 +41,9 @@ public class DriverControlClass extends LinearOpMode {
         while (opModeIsActive()) {
             try {
                 controller.update();
-                //linearSlides.run(controller);
-                // fieldCenter.drive(controller);
+                linearSlides.run(controller);
+                fieldCenter.drive(controller);
+                gripperMechanism.run(controller);
             } catch (Exception exception) {
                 telemetry.addLine("Inside of the while loop:");
                 telemetry.clear();
