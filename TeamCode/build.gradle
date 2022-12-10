@@ -19,10 +19,16 @@ android {
     namespace = 'org.firstinspires.ftc.teamcode'
     packagingOptions {
         resources.excludes.add("META-INF/*")
+        jniLibs.useLegacyPackaging true
+
     }
 }
 
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+
+    implementation 'com.acmerobotics.roadrunner:core:0.5.6'
 }
