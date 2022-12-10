@@ -1,47 +1,47 @@
 package org.firstinspires.ftc.teamcode.AutonomousFolder;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.DoubleTelemetry;
 
 @Autonomous
 public class AutonomousClass extends LinearOpMode {
 
     // declare class variables here
-    // private SampleMecanumDrive drive;
+    //private SampleMecanumDrive drive;
+    //private FreightTransporter frightTransporter;
     private TensorFlowClass tensorFlow;
     private FtcDashboard dashboard;
-    private DoubleTelemetry doubleTelemetry;
     private int tensorFlowValue = 0;
 
 
     public void runOpMode() {
         telemetry.clear();
         try {
+            tensorFlow = new TensorFlowClass(telemetry, hardwareMap);
             dashboard = FtcDashboard.getInstance();
-            doubleTelemetry = new DoubleTelemetry(telemetry, dashboard);
-            tensorFlow = new TensorFlowClass(doubleTelemetry, hardwareMap);
         } catch (Exception exception) {
             telemetry.addLine("Outside of the while loop:");
             telemetry.addLine(exception.getMessage());
             telemetry.update();
         }
 
+
         waitForStart();
-        doubleTelemetry.update();
+        telemetry.update();
         while (opModeIsActive()) {
             try {
-                doubleTelemetry.initializePacket();
-                tensorFlowValue = tensorFlow.getRecognition();
-                doubleTelemetry.addData("tensorflowValue", tensorFlowValue);
+                TelemetryPacket packet = new TelemetryPacket();
+                tensorFlowValue = tensorFlow.getRecognition(packet);
+                telemetry.addData("tensorflowValue", tensorFlowValue);
+                dashboard.sendTelemetryPacket(packet);
             } catch (Exception exception) {
-                doubleTelemetry.addLine("Inside of the while loop:");
-                doubleTelemetry.clear();
-                doubleTelemetry.addLine(exception.getMessage());
+                telemetry.addLine("Inside of the while loop:");
+                telemetry.clear();
+                telemetry.addLine(exception.getMessage());
             }
-            doubleTelemetry.update();
+            telemetry.update();
         }
     }
 }
