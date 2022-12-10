@@ -16,10 +16,11 @@ public class Controller {
     public boolean gamepad2StrafeToggle;
     public boolean gamepad1RotationToggle;
     public boolean gamepad2RotationToggle;
-    public boolean liftpos0;
-    public boolean liftpos1;
-    public boolean liftpos2;
-    public boolean liftpos3;
+    public boolean gripperOpen;
+    public boolean liftPos0;
+    public boolean liftPos1;
+    public boolean liftPos2;
+    public boolean liftPos3;
 
     //wheel=car but if no wheel then no car
 
@@ -66,10 +67,10 @@ public class Controller {
         gamepad2StrafeToggle = gamepadKeyboard2.activeBefore.contains("left_bumper");
         gamepad1RotationToggle = gamepadKeyboard1.activeBefore.contains("right_bumper");
         gamepad2RotationToggle = gamepadKeyboard2.activeBefore.contains("right_bumper");
-        liftpos0 = gamepadKeyboard2.activeBefore.contains("b");
-        liftpos1 = gamepadKeyboard2.activeBefore.contains("a");
-        liftpos2 = gamepadKeyboard2.activeBefore.contains("x");
-        liftpos3 = gamepadKeyboard2.activeBefore.contains("y");
+        liftPos0 = gamepadKeyboard2.activeBefore.contains("b");
+        liftPos1 = gamepadKeyboard2.activeBefore.contains("a");
+        liftPos2 = gamepadKeyboard2.activeBefore.contains("x");
+        liftPos3 = gamepadKeyboard2.activeBefore.contains("y");
 
         gamepad1X = gamepad1.left_stick_x;
         gamepad1Y = -gamepad1.left_stick_y;

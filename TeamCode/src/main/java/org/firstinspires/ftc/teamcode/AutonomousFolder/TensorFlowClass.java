@@ -69,21 +69,6 @@ public class TensorFlowClass extends AutomatorClass {
                     for (Recognition recognition : recognitions) {
                         telemetry.addData("item", recognition.getLabel());
                         recognitionLabels.add(recognition.getLabel());
-                        /*
-                        if (recognition.getLabel().equals("Duck")) {
-                            terryDuckRight = recognition.getRight();
-                            telemetry.addData("    left", recognition.getLeft());
-                            telemetry.addData("    top", recognition.getTop());
-                            telemetry.addData("    right", terryDuckRight);
-                            telemetry.addData("    bottom", recognition.getBottom());
-                        } else {
-                            telemetry.addData("    left", recognition.getLeft());
-                            telemetry.addData("    top", recognition.getTop());
-                            telemetry.addData("    right", recognition.getRight());
-                            telemetry.addData("    bottom", recognition.getBottom());
-                        }
-                         */
-
                         i++;
                     }
                 }
