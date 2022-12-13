@@ -42,8 +42,6 @@ public class Controller {
     public boolean x;
     public boolean a;
     public boolean b;
-    public boolean rightBumper;
-    public boolean leftBumper;
 
     public double collectorRevCCW;
     public double collectorRevCW;
@@ -93,8 +91,6 @@ public class Controller {
         x = gamepad1.x;
         a = gamepad1.a;
         b = gamepad1.b;
-        rightBumper = gamepad1.right_bumper;
-        leftBumper = gamepad1.left_bumper;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;

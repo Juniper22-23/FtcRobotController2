@@ -37,9 +37,9 @@ public class FieldCenter extends Drivetrain {
             gamepadY = 0;
         }
         if (Math.abs(controller.gamepad1Rot) > 0.01) {
-            gamepadRot = -controller.gamepad1Rot;
+            gamepadRot = controller.gamepad1Rot;
         } else if (Math.abs(controller.gamepad2Rot) > 0.01) {
-            gamepadRot = -controller.gamepad2Rot;
+            gamepadRot = controller.gamepad2Rot;
         } else {
             gamepadRot = 0;
         }
@@ -119,7 +119,6 @@ public class FieldCenter extends Drivetrain {
         telemetry.addData("leftFrontPower: ", leftFrontPower);
         telemetry.addData("rightBackPower: ", rightBackPower);
         telemetry.addData("rightFrontPower: ", rightFrontPower);
-
 
         leftBackMotor.setPower(leftBackPower);
         leftFrontMotor.setPower(leftFrontPower);

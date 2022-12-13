@@ -51,6 +51,5 @@ public abstract class Drivetrain extends Mechanism {
     public DcMotor getRightFrontMotor() { return rightFrontMotor; }
 
 
-
     public abstract void drive(Controller controller);
 }
