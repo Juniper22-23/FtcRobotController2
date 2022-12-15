@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class FieldCenter extends Drivetrain {
+public class FieldCenterVivaan extends Drivetrain {
 
     private final double STRAFE_TOGGLE_FACTOR = 0.5;
     private final double ROTATION_TOGGLE_FACTOR = 0.5;
@@ -12,7 +12,7 @@ public class FieldCenter extends Drivetrain {
     private boolean strafeToggle = false;
     private boolean rotationToggle = false;
 
-    public FieldCenter(Telemetry telemetry, HardwareMap hardwareMap) {
+    public FieldCenterVivaan(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
@@ -50,7 +50,7 @@ public class FieldCenter extends Drivetrain {
         if (rotationToggle) {
             gamepadRot *= ROTATION_TOGGLE_FACTOR;
         }
-        if (controller.normalToggle) {
+        if (controller.VivaanToggle) {
             strafeToggle = !strafeToggle;
         }
         if (strafeToggle){

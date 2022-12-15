@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
-import org.firstinspires.ftc.teamcode.FieldCenter;
+import org.firstinspires.ftc.teamcode.FieldCenterAbhi;
 import org.firstinspires.ftc.teamcode.Mechanisms.GripperMechanism;
 import org.firstinspires.ftc.teamcode.Mechanisms.LinearSlidesMechanism;
 
@@ -13,12 +13,12 @@ import org.firstinspires.ftc.teamcode.Mechanisms.LinearSlidesMechanism;
 // Robot center programming
 // tensor https://www.youtube.com/watch?v=2FmcHiLCwTU help
 
-@TeleOp(name = "DriverControlClassNormal", group = "Tele-Op")
-public class DriverControlClass extends LinearOpMode {
+@TeleOp(name = "DriverControlClassAbhi", group = "Tele-Op")
+public class DriverControlClass_Abhi extends LinearOpMode {
 
     // declare class variables here
     public Controller controller;
-    public FieldCenter fieldCenter;
+    public FieldCenterAbhi fieldCenter;
     public LinearSlidesMechanism linearSlides;
     public GripperMechanism gripperMechanism;
 
@@ -27,7 +27,7 @@ public class DriverControlClass extends LinearOpMode {
         try {
             // setup
             controller = new Controller(gamepad1, gamepad2);
-            fieldCenter = new FieldCenter(telemetry, hardwareMap);
+            fieldCenter = new FieldCenterAbhi(telemetry, hardwareMap);
             linearSlides = new LinearSlidesMechanism(telemetry, hardwareMap);
             gripperMechanism = new GripperMechanism(telemetry, hardwareMap);
 

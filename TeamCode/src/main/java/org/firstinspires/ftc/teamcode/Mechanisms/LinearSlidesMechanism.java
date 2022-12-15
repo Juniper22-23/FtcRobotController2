@@ -24,7 +24,7 @@ public class LinearSlidesMechanism extends Mechanism{
     public float diameterOfSpool = 30.48f;
     public float linearSlidesSpeed = 0.75f;
     public double LINEAR_SLIDES_LOW = 347.5;// 13.5 inches converted to mm(low junction)
-    public double LINEAR_SLIDES_MEDIUM = 625.6;// 23.5 inches converted to mm(medium junction)
+    public double LINEAR_SLIDES_MEDIUM = 620.6;// 23.5 inches converted to mm(medium junction)
     public double LINEAR_SLIDES_HIGH = 875.6;// 33.5 inches converted to mm(high junction)
     public double LINEAR_SLIDES_NORM = 0;
     public double LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_NORM;
