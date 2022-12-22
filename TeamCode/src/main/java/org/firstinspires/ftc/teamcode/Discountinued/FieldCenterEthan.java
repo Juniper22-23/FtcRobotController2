@@ -1,15 +1,20 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Discountinued;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Drivetrain;
+import org.firstinspires.ftc.teamcode.Mathematics;
 
-public class FieldCenterAuto extends Drivetrain {
+public class FieldCenterEthan extends Drivetrain {
 
     private final double STRAFE_TOGGLE_FACTOR = 0.5;
     private final double ROTATION_TOGGLE_FACTOR = 0.5;
 
-    public FieldCenterAuto(Telemetry telemetry, HardwareMap hardwareMap) {
+    private boolean strafeToggle = false;
+    private boolean rotationToggle = false;
+
+    public FieldCenterEthan(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
@@ -85,7 +90,6 @@ public class FieldCenterAuto extends Drivetrain {
         telemetry.addData("leftFrontPower: ", leftFrontPower);
         telemetry.addData("rightBackPower: ", rightBackPower);
         telemetry.addData("rightFrontPower: ", rightFrontPower);
-        telemetry.update();
 
 
         leftBackMotor.setPower(leftBackPower);

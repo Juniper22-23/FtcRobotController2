@@ -1,23 +1,59 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Discountinued;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Controller;
+import org.firstinspires.ftc.teamcode.Mathematics;
 
-public class FieldCenterAuto extends Drivetrain {
+public class FieldCenter extends DrivetrainForNormal {
 
     private final double STRAFE_TOGGLE_FACTOR = 0.5;
     private final double ROTATION_TOGGLE_FACTOR = 0.5;
 
-    public FieldCenterAuto(Telemetry telemetry, HardwareMap hardwareMap) {
+    private boolean strafeToggle = false;
+    private boolean rotationToggle = false;
+
+    public FieldCenter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
     @Override
-    public void drive(double gamepadX, double gamepadY, double gamepadRot, boolean rotationToggle, boolean strafeToggle) {
+    public void drive(Controller controller) {
+        double gamepadX;
+        double gamepadY;
+        double gamepadRot;
 
+        if (Math.abs(controller.gamepad1X) > 0.01) {
+            gamepadX = controller.gamepad1X;
+        } else if (Math.abs(controller.gamepad2X) > 0.01) {
+            gamepadX = controller.gamepad2X;
+        } else {
+            gamepadX = 0;
+        }
+        if (Math.abs(controller.gamepad1Y) > 0.01) {
+            gamepadY = controller.gamepad1Y;
+        } else if (Math.abs(controller.gamepad2Y) > 0.01) {
+            gamepadY = controller.gamepad2Y;
+        } else {
+            gamepadY = 0;
+        }
+        if (Math.abs(controller.gamepad1Rot) > 0.01) {
+            gamepadRot = controller.gamepad1Rot;
+        } else if (Math.abs(controller.gamepad2Rot) > 0.01) {
+            gamepadRot = controller.gamepad2Rot;
+        } else {
+            gamepadRot = 0;
+        }
+
+        if (controller.gamepad1RotationToggle || controller.gamepad2RotationToggle) {
+            rotationToggle = !rotationToggle;
+        }
         if (rotationToggle) {
             gamepadRot *= ROTATION_TOGGLE_FACTOR;
+        }
+        if (controller.gamepad1StrafeToggle || controller.gamepad2StrafeToggle) {
+            strafeToggle = !strafeToggle;
         }
         if (strafeToggle) {
             gamepadX *= STRAFE_TOGGLE_FACTOR;
@@ -85,8 +121,6 @@ public class FieldCenterAuto extends Drivetrain {
         telemetry.addData("leftFrontPower: ", leftFrontPower);
         telemetry.addData("rightBackPower: ", rightBackPower);
         telemetry.addData("rightFrontPower: ", rightFrontPower);
-        telemetry.update();
-
 
         leftBackMotor.setPower(leftBackPower);
         leftFrontMotor.setPower(leftFrontPower);

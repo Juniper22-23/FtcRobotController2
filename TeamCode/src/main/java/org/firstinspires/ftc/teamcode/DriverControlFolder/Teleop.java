@@ -14,6 +14,7 @@ public class Teleop extends LinearOpMode {
     private Controller controller;
     private FieldCenterAuto fieldCenterAuto;
     private ConeTransporter coneTransporter;
+    private boolean canGrip = false;
 
     public void runOpMode() {
         telemetry.clear();
@@ -71,30 +72,31 @@ public class Teleop extends LinearOpMode {
                 fieldCenterAuto.drive(gamepadX, gamepadY, gamepadRot, rotationToggle, strafeToggle);
 
                 //CONETRANSPORTER___________________________________________________________________________
-                if (controller.liftPos0) {
+                if (controller.b) {
                     coneTransporter.setRiseLevel(0);
-                    coneTransporter.setGripperPosition(1);
-                } else if (controller.liftPos1) {
+                    coneTransporter.setGripperPosition(1.0);
+                } else if (controller.a) {
                     coneTransporter.setRiseLevel(1);
-                    coneTransporter.setGripperPosition(1);
-                } else if (controller.liftPos2) {
+                    coneTransporter.setGripperPosition(1.0);
+                } else if (controller.x) {
                     coneTransporter.setRiseLevel(2);
-                    coneTransporter.setGripperPosition(1);
-                } else if (controller.liftPos3) {
+                    coneTransporter.setGripperPosition(1.0);
+                } else if (controller.y) {
                     coneTransporter.setRiseLevel(3);
-                    coneTransporter.setGripperPosition(1);
-                }
-                if(controller.gripperOpen) {
-                    coneTransporter.setGripperPosition(0);
-                }
-                coneTransporter.lift();
-
-                //GRIPPER__________________________________________________________________________________
-                if(controller.leftBumper){
-                    coneTransporter.setGripperPosition(.75);
-                } else if(controller.rightBumper){
                     coneTransporter.setGripperPosition(1.0);
                 }
+                coneTransporter.lift();
+/*
+                //GRIPPER__________________________________________________________________________________
+                if(controller.leftBumper){
+                    canGrip = !canGrip;
+                }
+                if(canGrip){
+                    coneTransporter.setGripperPosition(.75);
+                } else {
+                    coneTransporter.setGripperPosition(1.0);
+                }*/
+
             } catch (Exception exception) {
                 telemetry.addLine("Inside of the while loop:");
                 telemetry.clear();

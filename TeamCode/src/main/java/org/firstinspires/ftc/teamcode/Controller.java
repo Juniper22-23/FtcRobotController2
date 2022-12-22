@@ -21,6 +21,12 @@ public class Controller {
     public boolean liftPos1;
     public boolean liftPos2;
     public boolean liftPos3;
+    public boolean leftBumper;
+    public boolean normalToggle;
+    public boolean EthanToggle;
+    public boolean VivaanToggle;
+    public double AbhiToggle;
+
 
     //wheel=car but if no wheel then no car
 
@@ -42,13 +48,13 @@ public class Controller {
     public boolean x;
     public boolean a;
     public boolean b;
-    public boolean rightBumper;
-    public boolean leftBumper;
 
     public double collectorRevCCW;
     public double collectorRevCW;
     public double liftRevCCW;
     public double liftRevCW;
+
+    public boolean toggle;
 
     public Controller(Gamepad gamepad1, Gamepad gamepad2) {
         this.gamepad1 = gamepad1;
@@ -90,12 +96,16 @@ public class Controller {
         x = gamepad1.x;
         a = gamepad1.a;
         b = gamepad1.b;
-        rightBumper = gamepad1.right_bumper;
-        leftBumper = gamepad1.left_bumper;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;
         liftRevCCW = gamepad2.left_trigger;
         liftRevCW = gamepad2.right_trigger;
+        VivaanToggle = gamepad1.right_bumper;
+        EthanToggle = gamepad1.right_bumper;
+        leftBumper = gamepad1.left_bumper;
+        AbhiToggle = gamepad1.right_trigger;
+        normalToggle = gamepad1.back;
+
     }
 }

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
-import org.firstinspires.ftc.teamcode.FieldCenter;
+import org.firstinspires.ftc.teamcode.Discountinued.FieldCenter;
 import org.firstinspires.ftc.teamcode.Mechanisms.GripperMechanism;
 import org.firstinspires.ftc.teamcode.Mechanisms.LinearSlidesMechanism;
 
@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.LinearSlidesMechanism;
 // Robot center programming
 // tensor https://www.youtube.com/watch?v=2FmcHiLCwTU help
 
-@TeleOp(name = "DriverControlClass2", group = "Tele-Op")
+@TeleOp(name = "TeleOpOld", group = "Tele-Op")
 public class DriverControlClass extends LinearOpMode {
 
     // declare class variables here
@@ -42,7 +42,7 @@ public class DriverControlClass extends LinearOpMode {
             try {
                 controller.update();
                 linearSlides.run(controller);
-                fieldCenter.drive(controller);
+                //fieldCenter.drive(controller);
                 gripperMechanism.run(controller);
             } catch (Exception exception) {
                 telemetry.addLine("Inside of the while loop:");

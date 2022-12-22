@@ -12,6 +12,8 @@ public class GripperMechanism extends Mechanism {
 
     public double position;
     public double _degrees;
+    private boolean canGrip = false;
+    //
 
     public GripperMechanism(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
@@ -23,15 +25,18 @@ public class GripperMechanism extends Mechanism {
         return degrees;
     }
     public void run(Controller controller){
-        if(controller.rightBumper){
+        if(controller.leftBumper){
+            canGrip = !canGrip;
+        }
+        if(canGrip){
+            position = .75;
+            gripper.setPosition(position);
+        } else if(canGrip = false){
             position = 1.0;
             gripper.setPosition(position);
 
-        } else if(controller.leftBumper){
-            position = .75;
-            //.75
-            gripper.setPosition(position);
         }
+
         telemetry.addData(">", "gripperPosition: " +  gripper.getPosition());
         telemetry.addData(">", "Position: " +  position);
 
