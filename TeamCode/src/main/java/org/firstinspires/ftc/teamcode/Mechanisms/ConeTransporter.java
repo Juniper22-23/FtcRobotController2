@@ -83,6 +83,7 @@ public class ConeTransporter extends Mechanism {
             linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
             linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlides.setPower(linearSlidesSpeed);
+
         }
     }
 
