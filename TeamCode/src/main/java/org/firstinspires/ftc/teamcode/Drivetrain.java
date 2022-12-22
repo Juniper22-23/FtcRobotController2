@@ -51,6 +51,6 @@ public abstract class Drivetrain extends Mechanism {
     public DcMotor getRightFrontMotor() { return rightFrontMotor; }
 
 
+    public abstract void drive(double gamepadX, double gamepadY, double gamepadRot, boolean rotationToggle, boolean strafeToggle);
 
-    public abstract void drive(Controller controller);
 }

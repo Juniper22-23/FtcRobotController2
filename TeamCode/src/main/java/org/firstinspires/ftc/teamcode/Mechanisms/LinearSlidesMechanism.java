@@ -10,13 +10,16 @@ import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.Mechanism;
 
 public class LinearSlidesMechanism extends Mechanism{
-    /*Rotations needed for each level:
+/*
+Rotations needed for each level:
      * Low:3.52370014617
      * Medium:6.13384840259
      * High:8.74399665901
      * InCone:-0.52202965128
      *
-     */
+*/
+
+
 
     private DcMotor linearSlides;
 

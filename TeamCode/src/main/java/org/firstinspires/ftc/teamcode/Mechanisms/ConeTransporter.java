@@ -1,16 +1,14 @@
-/*
 package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Mechanism;
 
 public class ConeTransporter extends Mechanism {
-
-    */
-/*
+    /*
     This is the general explanation for this class:
     liftPos0 = position to pick up the cone
     liftPos1 = lowest junction
@@ -19,13 +17,12 @@ public class ConeTransporter extends Mechanism {
 
     gripperClose = gripper closed i.e. not grasping the cone - NOT ACTUALLY USED
     gripperOpen = gripper expanded i.e. grasping the cone
-     *//*
-
+    */
 
     //LINEAR SLIDES________________________________________________________________________________
     private DcMotor linearSlides;
     private int riseLevel = 0;
-    private int gripperPosition = 0;
+    private double gripperPosition = 0;
     public float diameterOfSpool = 30.48f;
     public float linearSlidesSpeed = 0.75f;
     //public int LINEAR_SLIDES_IN_CONE = -50;
@@ -40,24 +37,56 @@ public class ConeTransporter extends Mechanism {
     public int currentTick;
 
     //GRIPPER______________________________________________________________________________________
-
+    private Servo gripper;
+    public double position;
 
     public ConeTransporter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
         linearSlides = this.hardwareMap.get(DcMotor.class, "linearSlides");
         linearSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //commented out in last years code??
+        gripper = this.hardwareMap.get(Servo.class, "gripper");
+    }
+
+    private int equate(double height) {
+        ticks = ticksPerRotation * (height / (diameterOfSpool * Math.PI) );
+        ticksAsInt = (int)ticks;
+        return ticksAsInt;
     }
 
     public void lift(){
-        //rise();
+        rise(riseLevel);
+    }
+
+    private void rise(int riseLevel){
+        if(riseLevel == 0){
+            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_NORM;
+            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
+            linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearSlides.setPower(linearSlidesSpeed);
+        } else if(riseLevel == 1){
+            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_LOW;
+            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
+            linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearSlides.setPower(linearSlidesSpeed);
+        } else if(riseLevel == 2){
+            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_MEDIUM;
+            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
+            linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearSlides.setPower(linearSlidesSpeed);
+        } else if(riseLevel == 3){
+            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_HIGH;
+            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
+            linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearSlides.setPower(linearSlidesSpeed);
+        }
     }
 
     public void setRiseLevel(int level){
         riseLevel = level;
     }
 
-    public void setGripperPosition(int position){
+    public void setGripperPosition(double position){
         gripperPosition = position;
     }
 
@@ -65,8 +94,7 @@ public class ConeTransporter extends Mechanism {
         return riseLevel;
     }
 
-    public int getGripperPosition(int position){
+    public double getGripperPosition(double position){
         return gripperPosition;
     }
 }
-*/

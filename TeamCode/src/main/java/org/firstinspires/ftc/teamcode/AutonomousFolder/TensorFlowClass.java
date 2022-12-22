@@ -54,7 +54,7 @@ public class TensorFlowClass extends AutomatorClass {
 
     public int getRecognition() {
         if (tfod != null) {
-            tfod.setZoom(1.0, (16.0 / 9.0));
+            //tfod.setZoom(1.0, (16.0 / 9.0));  // This is already set in the TensorFlowClass
             List<Recognition> recognitions = tfod.getRecognitions();
             if (recognitions == null) {
                 telemetry.addLine("[TFOD]: Recognitions is null...");
@@ -64,11 +64,9 @@ public class TensorFlowClass extends AutomatorClass {
                     telemetry.addLine("[TFOD]: Nothing is recognized...");
                 } else {
                     telemetry.addData("[TFOD]: Recognized this many objects ", recognitions.size());
-                    int i = 0;
                     for (Recognition recognition : recognitions) {
                         telemetry.addData("item", recognition.getLabel());
                         recognitionLabels.add(recognition.getLabel());
-                        i++;
                     }
                 }
                 if (recognitionLabels.contains("juniper")) {
@@ -76,7 +74,7 @@ public class TensorFlowClass extends AutomatorClass {
                 } else if (recognitionLabels.contains("SycamoreLogo")){
                         return 2;
                 } else if (recognitionLabels.contains("aviator")) {
-                    return 1;
+                        return 1;
                 }
             }
         } else {

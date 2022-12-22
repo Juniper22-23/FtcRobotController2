@@ -60,9 +60,6 @@ public class Controller {
     public void update() {
         gamepadKeyboard1.update();
         gamepadKeyboard2.update();
-
-        freightOuttake = gamepad1.left_bumper;
-        freightIntake = gamepad1.right_bumper;
         dumperToggle = gamepadKeyboard1.activeBefore.contains("y");
         carouselOperation = gamepad1.b;
         gamepad1StrafeToggle = gamepadKeyboard1.activeBefore.contains("left_bumper");
