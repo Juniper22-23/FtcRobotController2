@@ -11,15 +11,14 @@ public class AutonomousClass extends LinearOpMode {
     // declare class variables here
     //private SampleMecanumDrive drive;
     //private FreightTransporter frightTransporter;
-    private TensorFlowClass tensorFlow;
+    //private TensorFlowClass tensorFlow;
     private FtcDashboard dashboard;
     private int tensorFlowValue = 0;
-
 
     public void runOpMode() {
         telemetry.clear();
         try {
-            tensorFlow = new TensorFlowClass(telemetry, hardwareMap);
+            //tensorFlow = new TensorFlowClass(telemetry, hardwareMap);
             dashboard = FtcDashboard.getInstance();
         } catch (Exception exception) {
             telemetry.addLine("Outside of the while loop:");
@@ -33,7 +32,7 @@ public class AutonomousClass extends LinearOpMode {
         while (opModeIsActive()) {
             try {
                 TelemetryPacket packet = new TelemetryPacket();
-                tensorFlowValue = tensorFlow.getRecognition(packet);
+                //tensorFlowValue = tensorFlow.getRecognition(packet);
                 telemetry.addData("tensorflowValue", tensorFlowValue);
                 dashboard.sendTelemetryPacket(packet);
             } catch (Exception exception) {

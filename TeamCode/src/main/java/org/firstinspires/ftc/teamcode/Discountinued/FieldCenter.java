@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Discountinued;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Controller;
+import org.firstinspires.ftc.teamcode.Mathematics;
 
-public class FieldCenter extends Drivetrain {
+public class FieldCenter extends DrivetrainForNormal {
 
     private final double STRAFE_TOGGLE_FACTOR = 0.5;
     private final double ROTATION_TOGGLE_FACTOR = 0.5;
@@ -50,10 +52,10 @@ public class FieldCenter extends Drivetrain {
         if (rotationToggle) {
             gamepadRot *= ROTATION_TOGGLE_FACTOR;
         }
-        if (controller.normalToggle) {
+        if (controller.gamepad1StrafeToggle || controller.gamepad2StrafeToggle) {
             strafeToggle = !strafeToggle;
         }
-        if (strafeToggle){
+        if (strafeToggle) {
             gamepadX *= STRAFE_TOGGLE_FACTOR;
             gamepadY *= STRAFE_TOGGLE_FACTOR;
         }
@@ -62,13 +64,13 @@ public class FieldCenter extends Drivetrain {
         telemetry.addData("gamepadY: ", gamepadY);
         telemetry.addData("gamepadRot: ", gamepadRot);
 
-        double rotationEffectiveness = -1.0;
+        double rotationEffectiveness = 1.0;
         double xyEffectiveness = 1.0;
 
         // gamepadRot is negated because in math, a counterclockwise rotation is positive
         // (think unit circle), but on the controller, we expect the robot to rotate clockwise when
         // we push the stick to the right. Pushing the stick to the right outputs a positive value.
-        double turn = gamepadRot * rotationEffectiveness;
+        double turn = -gamepadRot * rotationEffectiveness;
         double controllerX = gamepadX * xyEffectiveness;
         double controllerY = gamepadY * xyEffectiveness;
         double[] controllerVector = {controllerX, controllerY};

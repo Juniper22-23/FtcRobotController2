@@ -29,7 +29,7 @@ public class TensorFlowClass extends AutomatorClass {
         super(telemetry, hardwareMap);
         VuforiaLocalizer.Parameters vParams = new VuforiaLocalizer.Parameters();
         vParams.vuforiaLicenseKey = vuforiaKey;
-        vParams.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        //vParams.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         vuforia = ClassFactory.getInstance().createVuforia(vParams);
 
         int monitorView = hardwareMap.appContext.getResources().getIdentifier(

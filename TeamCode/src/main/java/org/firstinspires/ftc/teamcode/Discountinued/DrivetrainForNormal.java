@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Discountinued;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Controller;
+import org.firstinspires.ftc.teamcode.Mechanism;
 
-public abstract class Drivetrain extends Mechanism {
+public abstract class DrivetrainForNormal extends Mechanism {
 
     protected DcMotor leftBackMotor;
     protected DcMotor leftFrontMotor;
@@ -14,7 +16,7 @@ public abstract class Drivetrain extends Mechanism {
 
     protected BNO055IMU imu;
 
-    public Drivetrain(Telemetry telemetry, HardwareMap hardwareMap) {
+    public DrivetrainForNormal(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
 
         leftBackMotor = this.hardwareMap.get(DcMotor.class, "leftBackMotor");
@@ -51,5 +53,5 @@ public abstract class Drivetrain extends Mechanism {
     public DcMotor getRightFrontMotor() { return rightFrontMotor; }
 
 
-    public abstract void drive(double gamepadX, double gamepadY, double gamepadRot, boolean rotationToggle, boolean strafeToggle);
+    public abstract void drive(Controller controller);
 }
