@@ -4,15 +4,15 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.DoubleTelemetry;
 
 import java.util.List;
 import java.util.ArrayList;
-// the wold is not flat
+
 public class TensorFlowClass extends AutomatorClass {
     private static final String vuforiaKey = "AYsOO+//////AAABmc2TlGXRrEpYsw1UPuEGK+xj/ybwffSKuL7ffLuhzm51GEM5ccJWjBO5XFTOmYCYiEVlCv2HpTa9+ZICMavximYCuGhJ0hCKtGTlYtTg/5AjtO6b1v9vswwtvKchMpcTFfhHK1A18R7FFbiJfQjTzznx1/Q6Et4TIRBqcEA5u7syU8suWSjWc3W/Kcy7ieQuQ15FoQsPQaw6JDZY32+xdyZlYbZ2MWfe0sPvQtkD+yJVa2wwZbBZTAoO6Q+rvRsHysQy0AqFB3sUKmRVvsV7gk7EQQ+edWgauCwgS23XZqwgkp5J/hKSZ/0SnXDuh1UQofuQFFxy57c9X18Cdky/Xl3hNTGUz393C8267cvb+JQy";
 
@@ -25,11 +25,11 @@ public class TensorFlowClass extends AutomatorClass {
 
     public ArrayList<String> recognitionLabels;
 
-    public TensorFlowClass(Telemetry telemetry, HardwareMap hardwareMap) {
+    public TensorFlowClass(DoubleTelemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
         VuforiaLocalizer.Parameters vParams = new VuforiaLocalizer.Parameters();
         vParams.vuforiaLicenseKey = vuforiaKey;
-        //vParams.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        vParams.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         vuforia = ClassFactory.getInstance().createVuforia(vParams);
 
         int monitorView = hardwareMap.appContext.getResources().getIdentifier(
@@ -52,13 +52,12 @@ public class TensorFlowClass extends AutomatorClass {
         }
     }
 
-    public int getRecognition(TelemetryPacket packet) {
+    public int getRecognition() {
         if (tfod != null) {
             //tfod.setZoom(1.0, (16.0 / 9.0));  // This is already set in the TensorFlowClass
             List<Recognition> recognitions = tfod.getRecognitions();
             if (recognitions == null) {
                 telemetry.addLine("[TFOD]: Recognitions is null...");
-                packet.put("", "");
             } else {
                 recognitionLabels.clear();
                 if (recognitions.size() == 0) {
