@@ -26,7 +26,6 @@ public class ConeTransporter extends Mechanism {
     //LINEAR SLIDES________________________________________________________________________________
     private DcMotor linearSlides;
     private int riseLevel = 0;
-    private double gripperPosition = 0;
     public float diameterOfSpool = 30.48f;
     public float linearSlidesSpeed = 0.75f;
     //public int LINEAR_SLIDES_IN_CONE = -50;
@@ -42,13 +41,13 @@ public class ConeTransporter extends Mechanism {
 
     //GRIPPER______________________________________________________________________________________
     private Servo gripper;
-    public double position;
+    public double gripperPosition;
 
     public ConeTransporter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
         linearSlides = this.hardwareMap.get(DcMotor.class, "linearSlides");
         linearSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //commented out in last years code??
+        linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         gripper = this.hardwareMap.get(Servo.class, "gripper");
     }
 
@@ -56,6 +55,10 @@ public class ConeTransporter extends Mechanism {
         ticks = ticksPerRotation * (height / (diameterOfSpool * Math.PI) );
         ticksAsInt = (int)ticks;
         return ticksAsInt;
+    }
+
+    public void grip(){
+        gripper.setPosition(gripperPosition);
     }
 
     public void lift(){
