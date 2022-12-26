@@ -26,6 +26,8 @@ public class Controller {
     public boolean EthanToggle;
     public boolean VivaanToggle;
     public double AbhiToggle;
+    public boolean rightBumper;
+
 
 
     //wheel=car but if no wheel then no car
@@ -106,6 +108,7 @@ public class Controller {
         leftBumper = gamepad1.left_bumper;
         AbhiToggle = gamepad1.right_trigger;
         normalToggle = gamepad1.back;
+        rightBumper = gamepad1.right_bumper;
 
     }
 }

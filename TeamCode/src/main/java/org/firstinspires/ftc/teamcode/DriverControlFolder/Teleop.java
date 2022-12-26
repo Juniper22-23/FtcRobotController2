@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.FieldCenterAuto;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
-@TeleOp(name = "TeleopNew2", group = "Tele-Op")
+@TeleOp(name = "TeleopNew", group = "Tele-Op")
 public class Teleop extends LinearOpMode {
 
     // declare class variables here
@@ -15,7 +15,6 @@ public class Teleop extends LinearOpMode {
     private FieldCenterAuto fieldCenterAuto;
     private ConeTransporter coneTransporter;
     private boolean canGrip = false;
-    private int canGripInt = 0;
 
     public void runOpMode() {
         telemetry.clear();
@@ -89,13 +88,26 @@ public class Teleop extends LinearOpMode {
                 coneTransporter.lift();
 
                 //GRIPPER__________________________________________________________________________________
-
-                if(controller.leftBumper){
-                    coneTransporter.setGripperPosition(.75);
-
-                } else if(controller.rightBumper) {
-                    coneTransporter.setGripperPosition(1.0);
+/*                if(controller.leftBumper){
+                    canGrip = !canGrip;
                 }
+                if(canGrip && !(controller.leftBumper)){
+                    coneTransporter.setGripperPosition(.75);
+                    coneTransporter.grip();
+                } else {
+                    coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.grip();
+                }
+ */
+               if(controller.leftBumper && !(controller.rightBumper)){
+                    coneTransporter.setGripperPosition(.75);
+                    coneTransporter.grip();
+               }
+
+               if(controller.rightBumper && !(controller.leftBumper)){
+                    coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.grip();
+               }
 
             } catch (Exception exception) {
                 telemetry.addLine("Inside of the while loop:");
