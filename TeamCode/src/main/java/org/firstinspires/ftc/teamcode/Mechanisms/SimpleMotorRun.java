@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
-//aaa
 
 @TeleOp(name = "SimpleMotorRun")
 public class SimpleMotorRun extends LinearOpMode{
@@ -13,7 +12,6 @@ public class SimpleMotorRun extends LinearOpMode{
     public void runOpMode() throws InterruptedException{
         waitForStart();
         while(opModeIsActive()){
-            //aaa
 
         if(gamepad1.a){
             position += 2;

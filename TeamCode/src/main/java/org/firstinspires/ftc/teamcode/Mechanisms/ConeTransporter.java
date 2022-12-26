@@ -41,7 +41,7 @@ public class ConeTransporter extends Mechanism {
     public int currentTick;
 
     //GRIPPER______________________________________________________________________________________
-    private Servo gripper;
+    public Servo gripper;
     public double position;
 
     public ConeTransporter(Telemetry telemetry, HardwareMap hardwareMap) {
@@ -50,6 +50,7 @@ public class ConeTransporter extends Mechanism {
         linearSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //commented out in last years code??
         gripper = this.hardwareMap.get(Servo.class, "gripper");
+
     }
 
     private int equate(double height) {

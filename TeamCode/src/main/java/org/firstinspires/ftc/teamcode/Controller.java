@@ -52,7 +52,7 @@ public class Controller {
     public double collectorRevCCW;
     public double collectorRevCW;
     public double liftRevCCW;
-    public double liftRevCW;
+    public boolean rightBumper;
 
     public boolean toggle;
 
@@ -100,7 +100,7 @@ public class Controller {
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;
         liftRevCCW = gamepad2.left_trigger;
-        liftRevCW = gamepad2.right_trigger;
+        rightBumper = gamepad1.right_bumper;
         VivaanToggle = gamepad1.right_bumper;
         EthanToggle = gamepad1.right_bumper;
         leftBumper = gamepad1.left_bumper;
