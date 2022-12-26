@@ -17,6 +17,19 @@ public class TrajectoryClass extends AutomatorClass {
         super(telemetry, hardwareMap);
     }
 
+    public void setPosition(double runningX, double runningY, double runningHeading){
+        drivetrain.setPoseEstimate(new Pose2d(runningX, runningY, runningHeading));
+    }
+
+    public double getPositionX(double startX){
+        return drivetrain.getPoseEstimate().getX() - startX;
+
+    }
+
+    public double getPositionY(double startY){
+        return drivetrain.getPoseEstimate().getX() - startY;
+    }
+
     public void forward(double x, double y, double heading, double distance) {
         Trajectory goForward = drivetrain.trajectoryBuilder(new Pose2d(x, y, heading))
                 .forward(distance)
@@ -32,10 +45,10 @@ public class TrajectoryClass extends AutomatorClass {
     }
 
     public void lineToPosition (double x, double y, double heading, double newX, double newY) {
-        Trajectory lineToPostion = drivetrain.trajectoryBuilder(new Pose2d(x, y, heading))
+        Trajectory lineToPosition = drivetrain.trajectoryBuilder(new Pose2d(x, y, heading))
                 .lineTo(new Vector2d(newX, newY))
                 .build();
-        drivetrain.followTrajectory(lineToPostion);
+        drivetrain.followTrajectory(lineToPosition);
     }
 
     public void strafeLeft(double x, double y, double heading, double distance) {

@@ -88,16 +88,26 @@ public class Teleop extends LinearOpMode {
                 coneTransporter.lift();
 
                 //GRIPPER__________________________________________________________________________________
-                if(controller.leftBumper){
+/*                if(controller.leftBumper){
                     canGrip = !canGrip;
                 }
-                if(canGrip){
+                if(canGrip && !(controller.leftBumper)){
                     coneTransporter.setGripperPosition(.75);
                     coneTransporter.grip();
                 } else {
                     coneTransporter.setGripperPosition(1.0);
                     coneTransporter.grip();
                 }
+ */
+               if(controller.leftBumper && !(controller.rightBumper)){
+                    coneTransporter.setGripperPosition(.75);
+                    coneTransporter.grip();
+               }
+
+               if(controller.rightBumper && !(controller.leftBumper)){
+                    coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.grip();
+               }
 
             } catch (Exception exception) {
                 telemetry.addLine("Inside of the while loop:");
