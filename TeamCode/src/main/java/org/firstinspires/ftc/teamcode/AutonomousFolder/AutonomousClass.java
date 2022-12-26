@@ -78,7 +78,7 @@ public class AutonomousClass extends LinearOpMode {
                 doubleTelemetry.addData("tensorflowValue", tensorFlowValue);
 
                 //driving to the high junction to drop preload
-                trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
+                trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 90); //add distance
                 runningX = trajectoryClass.getPositionX(startX);
                 runningY = trajectoryClass.getPositionY(startY);
                 coneTransporter.setRiseLevel(3);
@@ -86,9 +86,22 @@ public class AutonomousClass extends LinearOpMode {
                 trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
                 coneTransporter.setGripperPosition(0.75);
                 coneTransporter.grip();
+                trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
 
                 //Cycle - junction to cone pickup, and back to junction
-                coneTransporter.setRiseLevel(1);
+                coneTransporter.setRiseLevel(0);
+                coneTransporter.lift();
+                trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
+                runningX = trajectoryClass.getPositionX(startX);
+                runningY = trajectoryClass.getPositionY(startY);
+                trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
+                runningX = trajectoryClass.getPositionX(startX);
+                runningY = trajectoryClass.getPositionY(startY);
+                //gripper method
+                trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
+                runningX = trajectoryClass.getPositionX(startX);
+                runningY = trajectoryClass.getPositionY(startY);
+
                 //Parking - tensorflow
 
 
