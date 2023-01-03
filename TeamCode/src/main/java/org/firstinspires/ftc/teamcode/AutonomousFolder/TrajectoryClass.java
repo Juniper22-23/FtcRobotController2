@@ -74,9 +74,10 @@ public class TrajectoryClass extends AutomatorClass {
 
     public void splineToPosition (double x, double y, double heading, double newX, double newY, double newHeading) {
         Trajectory splineToPosition = drivetrain.trajectoryBuilder(new Pose2d(x, y, Math.toRadians(heading)))
-                .lineToSplineHeading(new Pose2d(x, y, Math.toRadians(newHeading)))
+                .splineTo(new Vector2d(x, y), Math.toRadians(newHeading))
                 .build();
         drivetrain.followTrajectory(splineToPosition);
+
     }
 }
 

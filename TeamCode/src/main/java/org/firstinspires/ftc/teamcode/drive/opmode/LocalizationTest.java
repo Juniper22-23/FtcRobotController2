@@ -19,8 +19,9 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 From the Table:
  --forward = positive X
  --Right = positive Y
- --Rotation CLockwise = Positve
- */
+ --Rotation Clockwise = Positive
+*/
+
 public class LocalizationTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
