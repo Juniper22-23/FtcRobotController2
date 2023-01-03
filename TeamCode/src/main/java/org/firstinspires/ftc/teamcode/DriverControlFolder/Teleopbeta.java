@@ -62,8 +62,11 @@ public class Teleopbeta extends LinearOpMode {
 
             teleopMode = TeleopModes.LINEAR_SLIDES_MOVE;
             slidesModes = SlidesModes.SLIDES_DOWN;
+
+
         } catch (Exception exception) {
             telemetry.addLine("Outside of the while loop:");
+            telemetry.addData("hardwareMap: ", hardwareMap);
             telemetry.addLine(exception.getMessage());
             telemetry.update();
         }

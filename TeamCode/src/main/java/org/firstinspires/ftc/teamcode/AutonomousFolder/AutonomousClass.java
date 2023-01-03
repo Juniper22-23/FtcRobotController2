@@ -43,8 +43,6 @@ public class AutonomousClass extends LinearOpMode {
     public double startY =  0.0;
     private int tensorFlowValue = 0;
 
-
-
     public void runOpMode() {
         telemetry.clear();
         try {
@@ -77,7 +75,7 @@ public class AutonomousClass extends LinearOpMode {
                 tensorFlowValue = tensorFlow.getRecognition();
                 doubleTelemetry.addData("tensorflowValue", tensorFlowValue);
 
-                //driving to the high junction to drop preload
+                //driving to the high junction to drop preload_____________________________________________________________________
                 trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 90); //add distance
                 runningX = trajectoryClass.getPositionX(startX);
                 runningY = trajectoryClass.getPositionY(startY);
@@ -88,7 +86,7 @@ public class AutonomousClass extends LinearOpMode {
                 coneTransporter.grip();
                 trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
 
-                //Cycle - junction to cone pickup, and back to junction
+                //Cycle - junction to cone pickup, and back to junction_________________________________________________________________
                 coneTransporter.setRiseLevel(0);
                 coneTransporter.lift();
                 trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
@@ -101,11 +99,35 @@ public class AutonomousClass extends LinearOpMode {
                 trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
                 runningX = trajectoryClass.getPositionX(startX);
                 runningY = trajectoryClass.getPositionY(startY);
+                trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
+                runningX = trajectoryClass.getPositionX(startX);
+                runningY = trajectoryClass.getPositionY(startY);
+                coneTransporter.setRiseLevel(3);
+                coneTransporter.lift();
+                trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
+                runningX = trajectoryClass.getPositionX(startX);
+                runningY = trajectoryClass.getPositionY(startY);
 
-                //Parking - tensorflow
-
-
-
+                //Parking - tensorflow_____________________________________________________________________________
+                if (tensorFlowValue == 3) {
+                    trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                    trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                } else if(tensorFlowValue == 2){
+                    trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                } else if (tensorFlowValue == 1){
+                    trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                    trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                }
             } catch (Exception exception) {
                 doubleTelemetry.addLine("Inside of the while loop:");
                 doubleTelemetry.clear();

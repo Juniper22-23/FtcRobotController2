@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
+import org.firstinspires.ftc.teamcode.DoubleTelemetry;
 import org.firstinspires.ftc.teamcode.FieldCenterAuto;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
@@ -14,21 +15,23 @@ public class Teleopbackup extends LinearOpMode {
     private Controller controller;
     private FieldCenterAuto fieldCenterAuto;
     private ConeTransporter coneTransporter;
-    private boolean canGrip = false;
 
     public void runOpMode() {
         telemetry.clear();
+
         try {
             // setup
             controller = new Controller(gamepad1, gamepad2);
             fieldCenterAuto = new FieldCenterAuto(telemetry, hardwareMap);
             coneTransporter = new ConeTransporter(telemetry, hardwareMap);
 
+
         } catch (Exception exception) {
             telemetry.addLine("Outside of the while loop:");
             telemetry.addLine(exception.getMessage());
             telemetry.update();
         }
+
         telemetry.update();
         waitForStart();
         while (opModeIsActive()) {
@@ -113,7 +116,7 @@ public class Teleopbackup extends LinearOpMode {
                 }
 
             } catch (Exception exception) {
-                telemetry.addLine("Inside of the while loop:");
+               telemetry.addLine("Inside of the while loop:");
                 telemetry.clear();
                 telemetry.addLine(exception.getMessage());
             }
