@@ -76,8 +76,8 @@ public class ConeTransporter extends Mechanism {
     }
 
     private void rise(int riseLevel){
-        if(riseLevel == -1){
-            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_IN_CONE;
+        if(riseLevel == 0){
+            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_NORM;
             linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
             linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlides.setPower(linearSlidesSpeed);
@@ -96,12 +96,11 @@ public class ConeTransporter extends Mechanism {
             linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
             linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlides.setPower(linearSlidesSpeed);
-        } else if(riseLevel == 0){
-            LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_NORM;
-            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
+        } else if(riseLevel == -1){
+            LINEAR_SLIDES_CURRENT =LINEAR_SLIDES_IN_CONE;
+            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_IN_CONE));
             linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlides.setPower(linearSlidesSpeed);
-
         }
     }
     public void moveDown() {

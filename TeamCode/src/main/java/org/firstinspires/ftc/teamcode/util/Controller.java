@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+
+import org.firstinspires.ftc.teamcode.GamepadKeyboard;
 
 public class Controller {
     private final Gamepad gamepad1;
@@ -27,7 +29,6 @@ public class Controller {
     public boolean VivaanToggle;
     public double AbhiToggle;
     public boolean rightBumper;
-    public boolean dpadUp;
     public boolean dpadDown;
 
 
@@ -56,8 +57,8 @@ public class Controller {
     public double collectorRevCCW;
     public double collectorRevCW;
     public double liftRevCCW;
-    public double rightTrigger;
-    public double leftTrigger;
+    public double liftRevCW;
+
     public boolean toggle;
 
     public Controller(Gamepad gamepad1, Gamepad gamepad2) {
@@ -81,7 +82,6 @@ public class Controller {
         liftPos2 = gamepadKeyboard2.activeBefore.contains("x");
         liftPos3 = gamepadKeyboard2.activeBefore.contains("y");
 
-
         gamepad1X = gamepad1.left_stick_x;
         gamepad1Y = -gamepad1.left_stick_y;
         collectorSlowLeft = gamepad1.dpad_left;
@@ -97,23 +97,23 @@ public class Controller {
         liftSlowUp = gamepad2.dpad_up;
         gamepad2Rot = gamepad2.right_stick_x;
         //Buttons
-        y = gamepad2.y;
-        x = gamepad2.x;
-        a = gamepad2.a;
-        b = gamepad2.b;
+        y = gamepad1.y;
+        x = gamepad1.x;
+        a = gamepad1.a;
+        b = gamepad1.b;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;
         liftRevCCW = gamepad2.left_trigger;
+        liftRevCW = gamepad2.right_trigger;
         VivaanToggle = gamepad1.right_bumper;
         EthanToggle = gamepad1.right_bumper;
-        leftBumper = gamepadKeyboard1.activeBefore.contains("left_bumper");
+        leftBumper = gamepad1.left_bumper;
         AbhiToggle = gamepad1.right_trigger;
         normalToggle = gamepad1.back;
-        dpadDown = gamepad2.dpad_down;
-        dpadUp = gamepad2.dpad_up;
-        rightTrigger = gamepad2.right_trigger;
-        leftTrigger = gamepad2.left_trigger;
+        rightBumper = gamepad1.right_bumper;
+        dpadDown = gamepad1.dpad_down;
+
 
     }
 }

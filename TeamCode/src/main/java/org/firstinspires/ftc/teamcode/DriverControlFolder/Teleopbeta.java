@@ -9,18 +9,18 @@ import org.firstinspires.ftc.teamcode.FieldCenterAuto;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 enum TeleopModes {
-    DRIVER_CONTROL, GRIP
+    LINEAR_SLIDES_MOVE, GRIP
 }
 
-enum GripperModes {
-    GRIPPER_DOWN, GRIPPER_UP
+enum SlidesModes {
+    SLIDES_DOWN, SLIDES_UP
 }
 
-@TeleOp(name = "TeleopNew3", group = "Tele-Op")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "Teleopbeta", group = "Tele-Op")
+public class Teleopbeta extends LinearOpMode {
 
     // declare class variables here
     private Controller controller;
@@ -28,12 +28,20 @@ public class Teleop extends LinearOpMode {
     private ConeTransporter coneTransporter;
 
     private TeleopModes teleopMode;
-    private GripperModes gripperMode;
+    private SlidesModes slidesModes;
 
-    private HashMap<GripperModes, Double> gripperTimes;
+    private HashMap<SlidesModes, Double> slidesTimes = new HashMap<SlidesModes,Double>();
 
     private ElapsedTime timer;
     double startTime;
+    float buffer = 0.2f;
+    double interval = 1000.0;
+    double time;
+    int highestBufferForSlides_DOWN = 7;
+    int lowestBufferForSlides_DOWN = -4;
+    int highestBufferForSlides_UP = 47;
+    int lowestBufferForSlides_UP = 36;
+
 
 
 
@@ -45,16 +53,15 @@ public class Teleop extends LinearOpMode {
             fieldCenterAuto = new FieldCenterAuto(telemetry, hardwareMap);
             coneTransporter = new ConeTransporter(telemetry, hardwareMap);
 
-            gripperTimes = new HashMap<GripperModes, Double>();
-            gripperTimes.put(GripperModes.GRIPPER_DOWN, 1000.0);
-            gripperTimes.put(GripperModes.GRIPPER_UP, 1000.0);
+            slidesTimes.put(SlidesModes.SLIDES_DOWN, 1000.0);
+            slidesTimes.put(SlidesModes.SLIDES_UP, 1000.0);
 
             timer = new ElapsedTime();
             timer.reset();
-            startTime = timer.milliseconds();
+            time = timer.milliseconds();
 
-            teleopMode = TeleopModes.DRIVER_CONTROL;
-            gripperMode = GripperModes.GRIPPER_DOWN;
+            teleopMode = TeleopModes.LINEAR_SLIDES_MOVE;
+            slidesModes = SlidesModes.SLIDES_DOWN;
         } catch (Exception exception) {
             telemetry.addLine("Outside of the while loop:");
             telemetry.addLine(exception.getMessage());
@@ -74,47 +81,41 @@ public class Teleop extends LinearOpMode {
 
                 if (Math.abs(controller.gamepad1X) > 0.01) {
                     gamepadX = controller.gamepad1X;
-                } else if (Math.abs(controller.gamepad2X) > 0.01) {
-                    gamepadX = controller.gamepad2X;
                 } else {
                     gamepadX = 0;
                 }
                 if (Math.abs(controller.gamepad1Y) > 0.01) {
                     gamepadY = controller.gamepad1Y;
-                } else if (Math.abs(controller.gamepad2Y) > 0.01) {
-                    gamepadY = controller.gamepad2Y;
                 } else {
                     gamepadY = 0;
                 }
                 if (Math.abs(controller.gamepad1Rot) > 0.01) {
                     gamepadRot = -controller.gamepad1Rot;
-                } else if (Math.abs(controller.gamepad2Rot) > 0.01) {
-                    gamepadRot = -controller.gamepad2Rot;
                 } else {
                     gamepadRot = 0;
                 }
-                if (controller.gamepad1RotationToggle || controller.gamepad2RotationToggle) {
+                if (controller.gamepad1RotationToggle ) {
+                    //right bumper
                     rotationToggle = true;
                 }
-                if (controller.gamepad1StrafeToggle || controller.gamepad2StrafeToggle) {
+                if (controller.gamepad1StrafeToggle) {
+                    //left bumper
                     strafeToggle = true;
                 }
 
                 fieldCenterAuto.drive(gamepadX, gamepadY, gamepadRot, rotationToggle, strafeToggle);
 
-                //CONETRANSPORTER___________________________________________________________________________
-                //GRIPPER__________________________________________________________________________________
 
                 telemetry.addData("", timer.milliseconds());
                 telemetry.addData("startTime", startTime);
 
-                if (controller.leftBumper) {
-                    if (teleopMode == TeleopModes.DRIVER_CONTROL) {
+                if (controller.leftBumper || controller.rightBumper) {
+                    if (teleopMode == TeleopModes.LINEAR_SLIDES_MOVE) {
                         teleopMode = TeleopModes.GRIP;
                     }
                 }
 
-                if (teleopMode == TeleopModes.DRIVER_CONTROL) {
+                if (teleopMode == TeleopModes.LINEAR_SLIDES_MOVE) {
                     if (controller.a) {
                         coneTransporter.setRiseLevel(1);
                         coneTransporter.setGripperPosition(1.0);
@@ -131,78 +132,55 @@ public class Teleop extends LinearOpMode {
                         coneTransporter.setRiseLevel(0);
                         coneTransporter.setGripperPosition(1.0);
                         coneTransporter.lift();
+                    } else if(controller.dpadDown){
+                        coneTransporter.setRiseLevel(-1);
+                        coneTransporter.setGripperPosition(1.0);
+                        coneTransporter.lift();
                     }
 
-                    if(controller.dpadUp){
+                    if(controller.rightTrigger >= buffer){
                         coneTransporter.moveUp();
-                    }else if(controller.dpadDown){
+                    }else if(controller.leftTrigger >= buffer){
                         coneTransporter.moveDown();
                     }
                 } else if (teleopMode == TeleopModes.GRIP) {
-                    if (gripperMode == GripperModes.GRIPPER_DOWN) {
+                    if(controller.leftBumper){
+                        slidesModes = SlidesModes.SLIDES_DOWN;
+                    } else if(controller.rightBumper){
+                        slidesModes = SlidesModes.SLIDES_UP;
+                    }
+                    if (slidesModes == SlidesModes.SLIDES_DOWN) {
                         // checks how long it's been since the timer was reset, which is the time when the gripper started moving
-                        boolean gripperReady = timer.milliseconds() - startTime > gripperTimes.get(GripperModes.GRIPPER_DOWN);
-                        boolean liftReady = coneTransporter.linearSlides.getCurrentPosition() == coneTransporter.LINEAR_SLIDES_IN_CONE;
+                        startTime = timer.now(TimeUnit.MILLISECONDS);
+                        boolean gripperReady = timer.milliseconds() - startTime > interval;
+                        boolean liftReady = coneTransporter.linearSlides.getCurrentPosition() > lowestBufferForSlides_DOWN && coneTransporter.linearSlides.getCurrentPosition() < highestBufferForSlides_DOWN;
 
                         if (!gripperReady) {
                             coneTransporter.setGripperPosition(1.0);
                             coneTransporter.grip();
-                        }
 
-                        if (!liftReady && gripperReady) {
+                        } else if (!liftReady) {
                             coneTransporter.setRiseLevel(-1);
                             coneTransporter.lift();
+                        } else{
+                            slidesModes = SlidesModes.SLIDES_UP;
                         }
-
-                        if (gripperReady && liftReady) {
-                            timer.reset();
-                            gripperMode = GripperModes.GRIPPER_UP;
-                        }
-                    } else if (gripperMode == GripperModes.GRIPPER_UP) {
-                        boolean gripperReady = timer.milliseconds() - startTime > gripperTimes.get(GripperModes.GRIPPER_UP);
-                        boolean liftReady = coneTransporter.linearSlides.getCurrentPosition() == coneTransporter.LINEAR_SLIDES_NORM;
+                    } else if (slidesModes == SlidesModes.SLIDES_UP) {
+                        boolean gripperReady = timer.milliseconds() - startTime > interval;
+                        boolean liftReady = coneTransporter.linearSlides.getCurrentPosition() > lowestBufferForSlides_UP && coneTransporter.linearSlides.getCurrentPosition() < highestBufferForSlides_UP;
 
                         if (!gripperReady) {
                             coneTransporter.setGripperPosition(0.75);
                             coneTransporter.grip();
-                        }
-
-                        if (!liftReady && gripperReady) {
+                        }else if (!liftReady) {
                             coneTransporter.setRiseLevel(0);
                             coneTransporter.lift();
-                        }
-
-                        if (gripperReady && liftReady) {
+                        }else {
                             timer.reset();
-                            gripperMode = GripperModes.GRIPPER_DOWN;
-                            teleopMode = TeleopModes.DRIVER_CONTROL;
+                            teleopMode = TeleopModes.LINEAR_SLIDES_MOVE;
                         }
                     }
                 }
-
-              /*  if(controller.leftBumper){
-                    coneTransporter.setRiseLevel(-1);
-                    coneTransporter.setGripperPosition(1.0);
-                    coneTransporter.grip();
-                    coneTransporter.lift();
-                    //if(coneTransporter.linearSlides.getCurrentPosition() == 0){
-                        coneTransporter.setGripperPosition(.75);
-                        coneTransporter.grip();
-                    //}
-                } else {
-                    coneTransporter.setGripperPosition(1.0);
-                    coneTransporter.grip();
-                }*/
-
-               /*if(controller.leftBumper && !(controller.rightBumper)){
-                    coneTransporter.setGripperPosition(.75);
-                    coneTransporter.grip();
-               }
-
-               if(controller.rightBumper && !(controller.leftBumper)){
-                    coneTransporter.setGripperPosition(1.0);
-                    coneTransporter.grip();
-               }*/
 
             } catch (Exception exception) {
                 telemetry.addLine("Inside of the while loop:");
