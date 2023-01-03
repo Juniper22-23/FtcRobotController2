@@ -95,8 +95,7 @@ public class AutonomousClass extends LinearOpMode {
                 trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
                 runningX = trajectoryClass.getPositionX(startX);
                 runningY = trajectoryClass.getPositionY(startY);
-                coneTransporter.setGripperPosition(1.0);
-                coneTransporter.grip();
+                //gripper method
                 trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
                 runningX = trajectoryClass.getPositionX(startX);
                 runningY = trajectoryClass.getPositionY(startY);
