@@ -4,15 +4,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
-import org.firstinspires.ftc.teamcode.FieldCenterAuto;
+import org.firstinspires.ftc.teamcode.FieldCenterV2;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
-@TeleOp(name = "TeleopNew", group = "Tele-Op")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "DriverControlClassV2", group = "Tele-Op")
+public class DriverControlClassV2 extends LinearOpMode {
 
     // declare class variables here
     private Controller controller;
-    private FieldCenterAuto fieldCenterAuto;
+    private FieldCenterV2 fieldCenterV2;
     private ConeTransporter coneTransporter;
     private boolean canGrip = false;
 
@@ -21,7 +21,7 @@ public class Teleop extends LinearOpMode {
         try {
             // setup
             controller = new Controller(gamepad1, gamepad2);
-            fieldCenterAuto = new FieldCenterAuto(telemetry, hardwareMap);
+            fieldCenterV2 = new FieldCenterV2(telemetry, hardwareMap);
             coneTransporter = new ConeTransporter(telemetry, hardwareMap);
 
         } catch (Exception exception) {
@@ -69,7 +69,7 @@ public class Teleop extends LinearOpMode {
                     strafeToggle = true;
                 }
 
-                fieldCenterAuto.drive(gamepadX, gamepadY, gamepadRot, rotationToggle, strafeToggle);
+                fieldCenterV2.drive(gamepadX, gamepadY, gamepadRot, rotationToggle, strafeToggle);
 
                 //CONETRANSPORTER___________________________________________________________________________
                 if (controller.b) {

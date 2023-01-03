@@ -4,12 +4,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class FieldCenterAuto extends Drivetrain {
+public class FieldCenterV2 extends Drivetrain {
 
     private final double STRAFE_TOGGLE_FACTOR = 0.5;
     private final double ROTATION_TOGGLE_FACTOR = 0.5;
 
-    public FieldCenterAuto(Telemetry telemetry, HardwareMap hardwareMap) {
+    public FieldCenterV2(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
     }
 
