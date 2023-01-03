@@ -27,6 +27,8 @@ public class Controller {
     public boolean VivaanToggle;
     public double AbhiToggle;
     public boolean rightBumper;
+    public boolean dpadUp;
+    public boolean dpadDown;
 
 
 
@@ -54,8 +56,8 @@ public class Controller {
     public double collectorRevCCW;
     public double collectorRevCW;
     public double liftRevCCW;
-    public double liftRevCW;
-
+    public double rightTrigger;
+    public double leftTrigger;
     public boolean toggle;
 
     public Controller(Gamepad gamepad1, Gamepad gamepad2) {
@@ -79,6 +81,7 @@ public class Controller {
         liftPos2 = gamepadKeyboard2.activeBefore.contains("x");
         liftPos3 = gamepadKeyboard2.activeBefore.contains("y");
 
+
         gamepad1X = gamepad1.left_stick_x;
         gamepad1Y = -gamepad1.left_stick_y;
         collectorSlowLeft = gamepad1.dpad_left;
@@ -94,21 +97,23 @@ public class Controller {
         liftSlowUp = gamepad2.dpad_up;
         gamepad2Rot = gamepad2.right_stick_x;
         //Buttons
-        y = gamepad1.y;
-        x = gamepad1.x;
-        a = gamepad1.a;
-        b = gamepad1.b;
+        y = gamepad1.y || gamepad2.y;
+        x = gamepad1.x || gamepad2.x;
+        a = gamepad1.a || gamepad2.a;
+        b = gamepad1.b || gamepad2.b;
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;
-        liftRevCCW = gamepad2.left_trigger;
-        liftRevCW = gamepad2.right_trigger;
+        liftRevCCW = gamepad1.left_trigger;
         VivaanToggle = gamepad1.right_bumper;
-        EthanToggle = gamepad1.right_bumper;
+        rightBumper = gamepad1.right_bumper;
         leftBumper = gamepad1.left_bumper;
         AbhiToggle = gamepad1.right_trigger;
         normalToggle = gamepad1.back;
-        rightBumper = gamepad1.right_bumper;
+        dpadDown = gamepad1.dpad_down;
+        dpadUp = gamepad1.dpad_up;
+        rightTrigger = gamepad1.right_trigger;
+        leftTrigger = gamepad1.left_trigger;
 
     }
 }
