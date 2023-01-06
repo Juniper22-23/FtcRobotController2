@@ -29,6 +29,8 @@ public class Controller {
     public boolean rightBumper;
     public boolean dpadUp;
     public boolean dpadDown;
+    public boolean dpadRight;
+    public boolean dpadLeft;
 
 
 
@@ -114,6 +116,7 @@ public class Controller {
         dpadUp = gamepad1.dpad_up;
         rightTrigger = gamepad1.right_trigger;
         leftTrigger = gamepad1.left_trigger;
-
+        dpadRight = gamepad1.dpad_right;
+        dpadLeft = gamepad1.dpad_left;
     }
 }

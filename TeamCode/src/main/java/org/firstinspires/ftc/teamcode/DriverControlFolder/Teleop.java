@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.DoubleTelemetry;
 import org.firstinspires.ftc.teamcode.FieldCenterAuto;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
-@TeleOp(name = "TeleopNew", group = "Tele-Op")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "Teleopbackup", group = "Tele-Op")
+public class Teleopbackup extends LinearOpMode {
 
     // declare class variables here
     private Controller controller;
@@ -33,6 +33,7 @@ public class Teleop extends LinearOpMode {
         }
 
         telemetry.update();
+        coneTransporter.initialize();
         waitForStart();
         while (opModeIsActive()) {
             try {
@@ -65,11 +66,15 @@ public class Teleop extends LinearOpMode {
                 } else {
                     gamepadRot = 0;
                 }
-                if (controller.gamepad1RotationToggle || controller.gamepad2RotationToggle) {
+                if (controller.leftTrigger >= 0.2f) {
                     rotationToggle = true;
+                } else{
+                    rotationToggle = false;
                 }
-                if (controller.gamepad1StrafeToggle || controller.gamepad2StrafeToggle) {
+                if (controller.leftTrigger >= 0.2f) {
                     strafeToggle = true;
+                } else {
+                    strafeToggle = false;
                 }
 
                 fieldCenterAuto.drive(gamepadX, gamepadY, gamepadRot, rotationToggle, strafeToggle);
@@ -78,39 +83,42 @@ public class Teleop extends LinearOpMode {
                 if (controller.b) {
                     coneTransporter.setRiseLevel(0);
                     coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.lift();
                 } else if (controller.a) {
                     coneTransporter.setRiseLevel(1);
                     coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.lift();
                 } else if (controller.x) {
                     coneTransporter.setRiseLevel(2);
                     coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.lift();
                 } else if (controller.y) {
                     coneTransporter.setRiseLevel(3);
                     coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.lift();
+                } else if(controller.dpadDown){
+                    coneTransporter.setRiseLevel(-1);
+                    coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.lift();
                 }
-                coneTransporter.lift();
+
+                if(controller.dpadLeft){
+                    coneTransporter.moveUp();
+                } else if(controller.dpadRight){
+                    coneTransporter.moveDown();
+                }
 
                 //GRIPPER__________________________________________________________________________________
-/*                if(controller.leftBumper){
-                    canGrip = !canGrip;
-                }
-                if(canGrip && !(controller.leftBumper)){
-                    coneTransporter.setGripperPosition(.75);
-                    coneTransporter.grip();
-                } else {
-                    coneTransporter.setGripperPosition(1.0);
-                    coneTransporter.grip();
-                }
- */
-               if(controller.leftBumper && !(controller.rightBumper)){
-                    coneTransporter.setGripperPosition(.75);
-                    coneTransporter.grip();
-               }
 
-               if(controller.rightBumper && !(controller.leftBumper)){
+                if(controller.leftBumper && !(controller.rightBumper)){
+                    coneTransporter.setGripperPosition(.75);
+                    coneTransporter.grip();
+                }
+
+                if(controller.rightBumper && !(controller.leftBumper)){
                     coneTransporter.setGripperPosition(1.0);
                     coneTransporter.grip();
-               }
+                }
 
             } catch (Exception exception) {
                telemetry.addLine("Inside of the while loop:");
