@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Controller;
-import org.firstinspires.ftc.teamcode.DoubleTelemetry;
 import org.firstinspires.ftc.teamcode.FieldCenterAuto;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
@@ -121,7 +120,7 @@ public class Teleopbackup extends LinearOpMode {
                 }
 
             } catch (Exception exception) {
-               telemetry.addLine("Inside of the while loop:");
+                telemetry.addLine("Inside of the while loop:");
                 telemetry.clear();
                 telemetry.addLine(exception.getMessage());
             }
