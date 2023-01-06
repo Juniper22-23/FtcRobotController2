@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.AutonomousFolder;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.DoubleTelemetry;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
@@ -35,13 +36,17 @@ public class AutonomousClass extends LinearOpMode {
     private FtcDashboard dashboard;
     private DoubleTelemetry doubleTelemetry;
     private ConeTransporter coneTransporter;
+    private ElapsedTime timer;
 
     public double runningX;
     public double runningY;
-    public double runningHeading;
-    public double startX = 0.0;
-    public double startY =  0.0;
+    public double runningHeading = Math.toRadians(90);
+    public double startX = 34;
+    public double startY = 65;
     private int tensorFlowValue = 0;
+    private int numberOfCycles = 1;
+    private int numberOfCones = 15;
+
 
     public void runOpMode() {
         telemetry.clear();
@@ -51,7 +56,7 @@ public class AutonomousClass extends LinearOpMode {
             trajectoryClass = new TrajectoryClass(doubleTelemetry, hardwareMap);
             dashboard = FtcDashboard.getInstance();
             doubleTelemetry = new DoubleTelemetry(telemetry, dashboard);
-            tensorFlow = new TensorFlowClass(doubleTelemetry, hardwareMap);
+            //tensorFlow = new TensorFlowClass(doubleTelemetry, hardwareMap);
             coneTransporter = new ConeTransporter(telemetry, hardwareMap);
 
             runningX = startX;
@@ -66,47 +71,57 @@ public class AutonomousClass extends LinearOpMode {
         }
 
         waitForStart();
-        doubleTelemetry.update();
+        // doubleTelemetry.update();
         while (opModeIsActive()) {
             try {
 
-                //tensorflow
+                /*//tensorflow
                 doubleTelemetry.initializePacket();
                 tensorFlowValue = tensorFlow.getRecognition();
-                doubleTelemetry.addData("tensorflowValue", tensorFlowValue);
+                doubleTelemetry.addData("tensorflowValue", tensorFlowValue);*/
 
                 //driving to the high junction to drop preload_____________________________________________________________________
-                trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 90); //add distance
-                runningX = trajectoryClass.getPositionX(startX);
-                runningY = trajectoryClass.getPositionY(startY);
                 coneTransporter.setRiseLevel(3);
                 coneTransporter.lift();
-                trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
-                coneTransporter.setGripperPosition(0.75);
-                coneTransporter.grip();
-                trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
+                trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 56.25); //add distance
+                runningX = trajectoryClass.getPositionX(startX);
+                runningY = trajectoryClass.getPositionY(startY);
+                trajectoryClass.forward(runningX, runningY, runningHeading, 0); //add distance
 
-                //Cycle - junction to cone pickup, and back to junction_________________________________________________________________
-                coneTransporter.setRiseLevel(0);
-                coneTransporter.lift();
-                trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
-                runningX = trajectoryClass.getPositionX(startX);
-                runningY = trajectoryClass.getPositionY(startY);
-                trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
-                runningX = trajectoryClass.getPositionX(startX);
-                runningY = trajectoryClass.getPositionY(startY);
-                //gripper method
-                trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
-                runningX = trajectoryClass.getPositionX(startX);
-                runningY = trajectoryClass.getPositionY(startY);
-                trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
-                runningX = trajectoryClass.getPositionX(startX);
-                runningY = trajectoryClass.getPositionY(startY);
-                coneTransporter.setRiseLevel(3);
-                coneTransporter.lift();
-                trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
-                runningX = trajectoryClass.getPositionX(startX);
-                runningY = trajectoryClass.getPositionY(startY);
+                timer = new ElapsedTime();
+                timer.reset();
+                while (timer.time() < 5000) {
+                    coneTransporter.setGripperPosition(0.75);
+                    coneTransporter.grip();
+                }
+                trajectoryClass.backward(runningX, runningY, runningHeading, 0); //add distance
+
+                /*//Cycle - junction to cone pickup, and back to junction_________________________________________________________________
+                for(int i = 0; i <= numberOfCycles; i++) {
+                    coneTransporter.setRiseLevel(0);
+                    coneTransporter.lift();
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                    *//*coneTransporter.setRiseLevel(numberOfCones); //5 cones
+                    coneTransporter.lift();
+                    numberOfCones--;*//*
+                    trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                    //gripper method
+                    trajectoryClass.backward(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, runningY, runningHeading); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                    coneTransporter.setRiseLevel(3);
+                    coneTransporter.lift();
+                    trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
+                    runningX = trajectoryClass.getPositionX(startX);
+                    runningY = trajectoryClass.getPositionY(startY);
+                }
 
                 //Parking - tensorflow_____________________________________________________________________________
                 if (tensorFlowValue == 3) {
@@ -127,13 +142,15 @@ public class AutonomousClass extends LinearOpMode {
                     trajectoryClass.forward(runningX, runningY, runningHeading, 90); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
-                }
+                }*/
+
+                telemetry.update();
             } catch (Exception exception) {
-                doubleTelemetry.addLine("Inside of the while loop:");
-                doubleTelemetry.clear();
-                doubleTelemetry.addLine(exception.getMessage());
+                //doubleTelemetry.addLine("Inside of the while loop:");
+                //doubleTelemetry.clear();
+                //doubleTelemetry.addLine(exception.getMessage());
             }
-            doubleTelemetry.update();
+            //doubleTelemetry.update();
         }
     }
 }
