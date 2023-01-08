@@ -39,8 +39,6 @@ public class GripperMechanism extends Mechanism {
 
         telemetry.addData(">", "gripperPosition: " +  gripper.getPosition());
         telemetry.addData(">", "Position: " +  position);
-
-        telemetry.update();
     }
 
 
