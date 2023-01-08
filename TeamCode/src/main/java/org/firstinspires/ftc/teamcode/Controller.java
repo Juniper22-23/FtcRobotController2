@@ -17,10 +17,10 @@ public class Controller {
     public boolean gamepad1RotationToggle;
     public boolean gamepad2RotationToggle;
     public boolean gripperOpen;
-    public boolean liftPos0;
-    public boolean liftPos1;
-    public boolean liftPos2;
-    public boolean liftPos3;
+    public boolean b2;
+    public boolean a2;
+    public boolean x2;
+    public boolean y2;
     public boolean leftBumper;
     public boolean normalToggle;
     public boolean EthanToggle;
@@ -78,10 +78,10 @@ public class Controller {
         gamepad2StrafeToggle = gamepadKeyboard2.activeBefore.contains("left_bumper");
         gamepad1RotationToggle = gamepadKeyboard1.activeBefore.contains("right_bumper");
         gamepad2RotationToggle = gamepadKeyboard2.activeBefore.contains("right_bumper");
-        liftPos0 = gamepadKeyboard2.activeBefore.contains("b");
-        liftPos1 = gamepadKeyboard2.activeBefore.contains("a");
-        liftPos2 = gamepadKeyboard2.activeBefore.contains("x");
-        liftPos3 = gamepadKeyboard2.activeBefore.contains("y");
+        b2 = gamepadKeyboard2.activeBefore.contains("b");
+        a2 = gamepadKeyboard2.activeBefore.contains("a");
+        x2 = gamepadKeyboard2.activeBefore.contains("x");
+        y2 = gamepadKeyboard2.activeBefore.contains("y");
 
 
         gamepad1X = gamepad1.left_stick_x;
@@ -99,10 +99,10 @@ public class Controller {
         liftSlowUp = gamepad2.dpad_up;
         gamepad2Rot = gamepad2.right_stick_x;
         //Buttons
-        y = gamepad1.y || gamepad2.y;
-        x = gamepad1.x || gamepad2.x;
-        a = gamepad1.a || gamepad2.a;
-        b = gamepad1.b || gamepad2.b;
+        b = gamepadKeyboard1.activeBefore.contains("b");
+        a = gamepadKeyboard1.activeBefore.contains("a");
+        x = gamepadKeyboard1.activeBefore.contains("x");
+        y = gamepadKeyboard1.activeBefore.contains("y");
 
         collectorRevCCW = gamepad1.left_trigger;
         collectorRevCW = gamepad1.right_trigger;
@@ -112,8 +112,8 @@ public class Controller {
         leftBumper = gamepad1.left_bumper;
         AbhiToggle = gamepad1.right_trigger;
         normalToggle = gamepad1.back;
-        dpadDown = gamepad1.dpad_down;
-        dpadUp = gamepad1.dpad_up;
+        dpadDown = gamepadKeyboard2.activeBefore.contains("dpad_down");;
+        dpadUp = gamepadKeyboard2.activeBefore.contains("dpad_up");;
         rightTrigger = gamepad1.right_trigger;
         leftTrigger = gamepad1.left_trigger;
         dpadRight = gamepad1.dpad_right;

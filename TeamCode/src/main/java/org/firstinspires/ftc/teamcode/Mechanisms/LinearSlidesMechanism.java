@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms;
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
@@ -24,7 +25,7 @@ Rotations needed for each level:
 
     private DcMotor linearSlides;
 
-    public float diameterOfSpool = 30.48f;
+    public float diameterOfSpool = 34f;
     public float linearSlidesSpeed = 0.75f;
     public double LINEAR_SLIDES_LOW = 347.5;// 13.5 inches converted to mm(low junction)
     public double LINEAR_SLIDES_MEDIUM = 620.6;// 23.5 inches converted to mm(medium junction)
@@ -43,6 +44,7 @@ Rotations needed for each level:
         linearSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearSlides.setDirection(DcMotor.Direction.REVERSE);
     }
 
     public int equate(double height) {
@@ -78,7 +80,6 @@ Rotations needed for each level:
         telemetry.addData(">", "LinearSlidesCurrentTick: " + currentTick);
         telemetry.addData(">", "Tick: " + ticksAsInt);
         telemetry.addData(">", "Power: " + linearSlidesSpeed);
-        telemetry.update();
     }
 
 

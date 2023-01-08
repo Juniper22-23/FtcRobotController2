@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -29,11 +30,6 @@ public class ConeTransporter extends Mechanism {
     gripperOpen = gripper expanded i.e. grasping the cone
     */
 
-    //LINEAR SLIDES________________________________________________________________________________
-    public DcMotor linearSlides;
-    private int riseLevel = 0;
-    public float diameterOfSpool = 30.48f;
-    public float linearSlidesSpeed = 0.75f;
 
     public Map<LinearSlidesLevels, Double> linearSlidesLevels;
 
@@ -41,7 +37,7 @@ public class ConeTransporter extends Mechanism {
     public double LINEAR_SLIDES_LOW = 337.5;// 13.5 inches converted to mm(low junction)
     public double LINEAR_SLIDES_MEDIUM = 587.5;// 23.5 inches converted to mm(medium junction)
     public double LINEAR_SLIDES_HIGH = 837.5;// 33.5 inches converted to mm(high junction) 2349
-    public double LINEAR_SLIDES_NORM = 40;
+    public double LINEAR_SLIDES_NORM = 100;
     public double LINEAR_SLIDES_IN_CONE = 0;
     public double LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_NORM;
     public double ticks;
@@ -64,14 +60,26 @@ public class ConeTransporter extends Mechanism {
     public Servo gripper;
     public double gripperPosition;
 
+    //LINEAR SLIDES________________________________________________________________________________
+    public DcMotor linearSlides;
+    private int riseLevel = 0;
+    public float diameterOfSpool = 34f;
+    public float linearSlidesSpeed = -0.75f;
+
+    //LIMIT SWITCH_________________________________________________________________________________
+    public DigitalChannel limitSwitch;
+
     public ConeTransporter(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
         linearSlides = this.hardwareMap.get(DcMotor.class, "linearSlides");
         linearSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         gripper = this.hardwareMap.get(Servo.class, "gripper");
+        limitSwitch = this.hardwareMap.get(DigitalChannel.class, "limit switch");
+        linearSlides.setDirection(DcMotor.Direction.REVERSE);
+
     }
 
-    private int equate(double height) {
+    public int equate(double height) {
         ticks = ticksPerRotation * (height / (diameterOfSpool * Math.PI));
         ticksAsInt = (int) ticks;
         return ticksAsInt;
@@ -109,7 +117,7 @@ public class ConeTransporter extends Mechanism {
             linearSlides.setPower(linearSlidesSpeed);
         } else if (riseLevel == -1) {
             LINEAR_SLIDES_CURRENT = LINEAR_SLIDES_IN_CONE;
-            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_IN_CONE));
+            linearSlides.setTargetPosition(equate(LINEAR_SLIDES_CURRENT));
             linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlides.setPower(linearSlidesSpeed);
         } else if (riseLevel == 11) {
@@ -138,8 +146,7 @@ public class ConeTransporter extends Mechanism {
             linearSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             linearSlides.setPower(linearSlidesSpeed);
         }
-        telemetry.addData("Linear Slides Pos.", linearSlides.getCurrentPosition());
-        telemetry.addData("Linear Slides Pos. Current var ", LINEAR_SLIDES_CURRENT);
+
     }
 
     public void moveDown() {
@@ -192,14 +199,15 @@ public class ConeTransporter extends Mechanism {
             linearSlides.setPower(linearSlidesSpeed);
         }
     }
-
-
-    public void initialize() {
-        linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setGripperPosition(1.0);
-        setRiseLevel(0);
-        grip();
-        lift();
+    public void limitSwitch(){
+        //true means pressed(Slides are at home), false means it isn't pressed(Slides are up)
+        if (limitSwitch.getState()) {// This means the state = true
+            linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            linearSlides.setTargetPosition(10);
+        }
     }
+
+
+
 }
 

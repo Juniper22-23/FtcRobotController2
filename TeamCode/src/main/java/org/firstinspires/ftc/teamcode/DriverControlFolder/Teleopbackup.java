@@ -2,18 +2,29 @@ package org.firstinspires.ftc.teamcode.DriverControlFolder;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.FieldCenterAuto;
 import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 
-@TeleOp(name = "Teleopbackup", group = "Tele-Op")
+@TeleOp(name = "Teleop_Current", group = "Tele-Op")
 public class Teleopbackup extends LinearOpMode {
 
     // declare class variables here
     private Controller controller;
     private FieldCenterAuto fieldCenterAuto;
     private ConeTransporter coneTransporter;
+
+    public int canGo = 1;
+
+    void initialize() {
+        coneTransporter.linearSlides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        coneTransporter.setGripperPosition(1.0);
+        coneTransporter.setRiseLevel(0);
+        coneTransporter.grip();
+        coneTransporter.lift();
+    }
 
     public void runOpMode() {
         telemetry.clear();
@@ -32,7 +43,7 @@ public class Teleopbackup extends LinearOpMode {
         }
 
         telemetry.update();
-        coneTransporter.initialize();
+        initialize();
         waitForStart();
         while (opModeIsActive()) {
             try {
@@ -67,7 +78,7 @@ public class Teleopbackup extends LinearOpMode {
                 }
                 if (controller.leftTrigger >= 0.2f) {
                     rotationToggle = true;
-                } else{
+                } else {
                     rotationToggle = false;
                 }
                 if (controller.leftTrigger >= 0.2f) {
@@ -79,8 +90,9 @@ public class Teleopbackup extends LinearOpMode {
                 fieldCenterAuto.drive(gamepadX, gamepadY, gamepadRot, rotationToggle, strafeToggle);
 
                 //CONETRANSPORTER___________________________________________________________________________
-                if (controller.b) {
-                    coneTransporter.setRiseLevel(0);
+                coneTransporter.limitSwitch();
+                if (controller.y) {
+                    coneTransporter.setRiseLevel(3);
                     coneTransporter.setGripperPosition(1.0);
                     coneTransporter.lift();
                 } else if (controller.a) {
@@ -91,30 +103,95 @@ public class Teleopbackup extends LinearOpMode {
                     coneTransporter.setRiseLevel(2);
                     coneTransporter.setGripperPosition(1.0);
                     coneTransporter.lift();
-                } else if (controller.y) {
-                    coneTransporter.setRiseLevel(3);
-                    coneTransporter.setGripperPosition(1.0);
-                    coneTransporter.lift();
-                } else if(controller.dpadDown){
-                    coneTransporter.setRiseLevel(-1);
-                    coneTransporter.setGripperPosition(1.0);
-                    coneTransporter.lift();
                 }
 
-                if(controller.dpadLeft){
+                //This will check if b is pressed if yes then it will check the position of the slides and decide where it should go
+                if (controller.b && canGo == 1) {
+                    if (coneTransporter.linearSlides.getCurrentPosition() >= coneTransporter.equate(95) && coneTransporter.linearSlides.getCurrentPosition() <= coneTransporter.equate(105)) {
+                        coneTransporter.setRiseLevel(-1);
+                        canGo = 0;
+                    } else {
+                        coneTransporter.setRiseLevel(0);
+                        canGo = 0;
+
+                    }
+                    coneTransporter.setGripperPosition(1.0);
+                    coneTransporter.lift();
+
+                } else {
+                    canGo = 1;
+                }
+
+
+                if (controller.dpadLeft) {
                     coneTransporter.moveUp();
-                } else if(controller.dpadRight){
+                } else if (controller.dpadRight) {
                     coneTransporter.moveDown();
                 }
 
+                //TELEMETRY___________________________________________________________________________
+
+                //adjusts strafe toggle
+//                if(controller.x2 && fieldCenterAuto.STRAFE_TOGGLE_FACTOR <= 1){
+//                    fieldCenterAuto.STRAFE_TOGGLE_FACTOR+=0.05;
+//                } else if(controller.b2 && fieldCenterAuto.STRAFE_TOGGLE_FACTOR >= 0){
+//                    fieldCenterAuto.STRAFE_TOGGLE_FACTOR-=0.05;
+//                }
+//
+//                //adjusts rotation toggle
+//                if(controller.y2 && fieldCenterAuto.ROTATION_TOGGLE_FACTOR <= 1){
+//                    fieldCenterAuto.ROTATION_TOGGLE_FACTOR+=0.05;
+//                }else if(controller.a2 && fieldCenterAuto.ROTATION_TOGGLE_FACTOR >= 0){
+//                    fieldCenterAuto.ROTATION_TOGGLE_FACTOR-=0.05;
+//                }
+//                if(controller.x2 && fieldCenterAuto.xyEffectivness <= 1){
+//                    fieldCenterAuto.xyEffectivness+=0.05;
+//                } else if(controller.b2 && fieldCenterAuto.xyEffectivness >= 0){
+//                    fieldCenterAuto.xyEffectivness-=0.05;
+//                }
+//
+//                //adjusts rotation toggle
+//                if(controller.y2 && fieldCenterAuto.rotationEffectivness <= 1){
+//                    fieldCenterAuto.rotationEffectivness+=0.05;
+//                }else if(controller.a2 && fieldCenterAuto.rotationEffectivness >= 0){
+//                    fieldCenterAuto.rotationEffectivness-=0.05;
+//                }
+//
+//                //adjust linear slide speed
+//                if(controller.dpadUp && coneTransporter.linearSlidesSpeed <= 1){
+//                    coneTransporter.linearSlidesSpeed+=0.075;
+//                }else if(controller.dpadDown && fieldCenterAuto.ROTATION_TOGGLE_FACTOR >= 0){
+//                    coneTransporter.linearSlidesSpeed-=0.075;
+//                }
+//
+//                telemetry.addData("gamepadX: ", gamepadX);
+//                telemetry.addData("gamepadY: ", gamepadY);
+//                telemetry.addData("gamepadRot: ", gamepadRot);
+//                telemetry.addData("imuMeasure: ", fieldCenterAuto.imuMeasure);
+//                telemetry.addData("leftBackPower: ", fieldCenterAuto.leftBackPower);
+//                telemetry.addData("leftFrontPower: ", fieldCenterAuto.leftFrontPower);
+//                telemetry.addData("rightBackPower: ", fieldCenterAuto.rightBackPower);
+//                telemetry.addData("rightFrontPower: ", fieldCenterAuto.rightFrontPower);
+
+
+
+                telemetry.addData("Linear slides speed",coneTransporter.linearSlidesSpeed);
+                telemetry.addData("strafeFactor",fieldCenterAuto.STRAFE_TOGGLE_FACTOR);
+                telemetry.addData("rotFactor",fieldCenterAuto.ROTATION_TOGGLE_FACTOR);
+                telemetry.addData(" ", " ");
+                telemetry.addData("limit Switch", coneTransporter.limitSwitch.getState());
+                telemetry.addData("Linear Slides Pos.", coneTransporter.linearSlides.getCurrentPosition());
+                telemetry.addData("Linear Slides Pos. Current var ", coneTransporter.LINEAR_SLIDES_CURRENT);
+
+
                 //GRIPPER__________________________________________________________________________________
 
-                if(controller.leftBumper && !(controller.rightBumper)){
+                if (controller.leftBumper && !(controller.rightBumper)) {
                     coneTransporter.setGripperPosition(.75);
                     coneTransporter.grip();
                 }
 
-                if(controller.rightBumper && !(controller.leftBumper)){
+                if (controller.rightBumper && !(controller.leftBumper)) {
                     coneTransporter.setGripperPosition(1.0);
                     coneTransporter.grip();
                 }
