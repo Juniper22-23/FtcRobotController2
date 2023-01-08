@@ -14,8 +14,8 @@ public class TrajectoryClass extends AutomatorClass {
 
     SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
 
-    public TrajectoryClass(DoubleTelemetry doubleTelemetry, HardwareMap hardwareMap) {
-        super(doubleTelemetry, hardwareMap);
+    public TrajectoryClass(Telemetry telemetry, HardwareMap hardwareMap) {
+        super(telemetry, hardwareMap);
     }
 
     public void setPosition(double runningX, double runningY, double runningHeading){

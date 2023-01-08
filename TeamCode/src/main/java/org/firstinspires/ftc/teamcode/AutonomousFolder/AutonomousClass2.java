@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.ConeTransporter;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Autonomous
-public class AutonomousClass extends LinearOpMode {
+public class AutonomousClass2 extends LinearOpMode {
 
     /*
     pseudocode:
@@ -72,7 +72,7 @@ public class AutonomousClass extends LinearOpMode {
         }
 
         waitForStart();
-         telemetry.update();
+        telemetry.update();
         while (opModeIsActive()) {
             try {
 
@@ -85,48 +85,40 @@ public class AutonomousClass extends LinearOpMode {
                 //driving to the high junction to drop preload_____________________________________________________________________
                 coneTransporter.setRiseLevel(3);
                 coneTransporter.lift();
-                trajectoryClass.strafeLeft(runningX, runningY, runningHeading, 56.25); //1 block(2ft) = 22.5 units
+                trajectoryClass.splineToPosition(runningX, runningY, runningHeading, runningX, 45, 0); //add distance
                 runningX = trajectoryClass.getPositionX(startX);
                 runningY = trajectoryClass.getPositionY(startY);
-                trajectoryClass.forward(runningX, runningY, runningHeading, 4.21875); //add distance
+                trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 22.75, 49.21875, runningHeading); //add distance
 
                 timer.reset();
                 while (timer.time() < 2000) {
                     coneTransporter.setGripperPosition(1.0);
                     coneTransporter.grip();
                 }
-                trajectoryClass.backward(runningX, runningY, runningHeading, 4.21875); //add distance
-                coneTransporter.setRiseLevel(0);
-                coneTransporter.lift();
 
                 //Cycle - junction to cone pickup, and back to junction_________________________________________________________________
                 for(int i = 0; i <= numberOfCycles; i++) {
-                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 45.25, 20, 90); //add distance
-                    runningX = trajectoryClass.getPositionX(startX);
-                    runningY = trajectoryClass.getPositionY(startY);
-                    coneTransporter.setRiseLevel(numberOfCones); //5 cones
+                    coneTransporter.setRiseLevel(numberOfCones);
                     coneTransporter.lift();
-                    trajectoryClass.forward(runningX, runningY, runningHeading, 11.5); //add distance
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 55.25, 45, -90); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
                     coneTransporter.inCone(numberOfCones); //5 cones
                     coneTransporter.lift();
                     numberOfCones--;
-
                     timer.reset();
                     while (timer.time() < 5000) {
                         coneTransporter.setGripperPosition(0.75);
                         coneTransporter.grip();
-                        coneTransporter.setRiseLevel(1); //5 cones
+                        coneTransporter.setRiseLevel(1); //CAN MAKE FASTER
                         coneTransporter.lift();
                     }
-                    coneTransporter.setRiseLevel(0); //5 cones
+                    coneTransporter.setRiseLevel(3);
                     coneTransporter.lift();
-                    trajectoryClass.backward(runningX, runningY, runningHeading, 11.5); //add distance
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 22.75, 49.21875, -90); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
-                    coneTransporter.setRiseLevel(3); //5 cones
-                    coneTransporter.lift();
+
                     trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 8.75, 34, 90); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
@@ -138,28 +130,19 @@ public class AutonomousClass extends LinearOpMode {
                         coneTransporter.setGripperPosition(1.0);
                         coneTransporter.grip();
                     }
-                    trajectoryClass.backward(runningX, runningY, runningHeading, 4.21875); //add distance
-                    coneTransporter.setRiseLevel(0);
-                    coneTransporter.lift();
                 }
 
                 //Parking - tensorflow_____________________________________________________________________________
                 if (tensorFlowValue == 3) {
-                    trajectoryClass.strafeRight(runningX, runningY, runningHeading, 11.25); //add distance
-                    runningX = trajectoryClass.getPositionX(startX);
-                    runningY = trajectoryClass.getPositionY(startY);
-                    trajectoryClass.backward(runningX, runningY, runningHeading, 22.5); //add distance
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 56.5, 45, runningHeading); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
                 } else if(tensorFlowValue == 2){
-                    trajectoryClass.strafeRight(runningX, runningY, runningHeading, 11.25); //add distance
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 34, 45, runningHeading); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
                 } else if (tensorFlowValue == 1){
-                    trajectoryClass.strafeRight(runningX, runningY, runningHeading, 11.25); //add distance
-                    runningX = trajectoryClass.getPositionX(startX);
-                    runningY = trajectoryClass.getPositionY(startY);
-                    trajectoryClass.forward(runningX, runningY, runningHeading, 22.5); //add distance
+                    trajectoryClass.splineToPosition(runningX, runningY, runningHeading, 11.5, 45, runningHeading); //add distance
                     runningX = trajectoryClass.getPositionX(startX);
                     runningY = trajectoryClass.getPositionY(startY);
                 }

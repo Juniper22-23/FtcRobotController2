@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -25,7 +26,7 @@ public class TensorFlowClass extends AutomatorClass {
 
     public ArrayList<String> recognitionLabels;
 
-    public TensorFlowClass(DoubleTelemetry telemetry, HardwareMap hardwareMap) {
+    public TensorFlowClass(Telemetry telemetry, HardwareMap hardwareMap) {
         super(telemetry, hardwareMap);
         VuforiaLocalizer.Parameters vParams = new VuforiaLocalizer.Parameters();
         vParams.vuforiaLicenseKey = vuforiaKey;
